@@ -8,9 +8,9 @@ import * as React from 'react';
 import { useState } from 'react'
 import { Text, View, TouchableOpacity, SafeAreaView, TextInput, StyleSheet } from 'react-native';
 import Dropdown from 'react-native-input-select';
-import styles from "../styles.js";
+// import styles from "../styles.js";
 
-export default function AddPatient({route}) {
+export default function AddPatient({navigation}) {
     // State hooks
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
@@ -38,14 +38,6 @@ export default function AddPatient({route}) {
         else if(bmiCalculated >= 30){ setBmiColor('red'); }
 
         setBmi(bmiCalculated);
-    };
-
-    // Clear button function
-    function onClickClearButton() {
-        setFirstName('');
-        setLastName('');
-        setAddress('');
-        setDateOfBirth('');
     };
 
     return (
@@ -124,11 +116,11 @@ export default function AddPatient({route}) {
                             <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, , {textAlign: 'center'}]}>ADD</Text>
                         </TouchableOpacity>
 
-                        {/* Clear button */}
+                        {/* Cancel button */}
                         <TouchableOpacity
                             style={[styles.button, {backgroundColor: 'red'}]}
-                            onPress = {onClickClearButton}>
-                            <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>CLEAR</Text>
+                            onPress={() => navigation.navigate('Patients')}>
+                            <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>CANCEL</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -137,3 +129,48 @@ export default function AddPatient({route}) {
         </View> 
     );
 }
+
+// Style definitions
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        // justifyContent: 'center',
+    },
+    wrapper: {
+        padding: 30,
+    },
+    header: {
+        fontSize: 26,
+        marginBottom: 5,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    inputStyle: {
+        fontSize: 20,
+        padding: 10,
+        marginTop: 10,
+        height: 55,
+        width: 330,
+        borderWidth: 1,
+        borderColor: 'black',
+        borderRadius: 0
+    },
+    button: {
+        marginTop: 10,
+        paddingTop: 10,
+        paddingBottom: 10,
+        textAlign: 'center',
+        borderRadius: 0,
+        width: 330
+    },
+    output: {
+        fontSize: 44,
+        fontWeight: 'bold',
+        marginTop: 10
+    },
+    explanations: {
+        fontSize: 20,
+        marginTop: 5
+    }
+});
