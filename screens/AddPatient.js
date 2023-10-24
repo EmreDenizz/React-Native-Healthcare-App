@@ -9,7 +9,6 @@ import { useState } from 'react'
 import { Text, View, TouchableOpacity, SafeAreaView, TextInput, StyleSheet } from 'react-native';
 import Dropdown from 'react-native-input-select';
 import styles from "../styles.js";
-import { SelectList } from 'react-native-dropdown-select-list'
 
 export default function AddPatient({route}) {
     // State hooks
@@ -87,8 +86,13 @@ export default function AddPatient({route}) {
                         <Dropdown
                             placeholder="Select an option..."
                             options={[
+                                { label: 'Emergency', value: 'Cardiology' },
                                 { label: 'Cardiology', value: 'Cardiology' },
-                                { label: 'Emergency', value: 'Emergency' },
+                                { label: 'Psychiatry', value: 'Psychiatry' },
+                                { label: 'Hematology', value: 'Hematology' },
+                                { label: 'Microbiology', value: 'Microbiology' },
+                                { label: 'Oncology', value: 'Oncology' },
+                                { label: 'Orthopedics', value: 'Orthopedics' }
                             ]}
                             selectedValue={department}
                             onValueChange={(value) => setDepartment(value)}
@@ -99,8 +103,13 @@ export default function AddPatient({route}) {
                         <Dropdown
                             placeholder="Select an option..."
                             options={[
+                                { label: 'Megan Garner', value: 'Megan Garner' },
                                 { label: 'Luke White', value: 'Luke White' },
                                 { label: 'George Smith', value: 'George Smith' },
+                                { label: 'Melinda Binder', value: 'Melinda Binder' },
+                                { label: 'Waldo Cross', value: 'Waldo Cross' },
+                                { label: 'Lawrence Shortle', value: 'Lawrence Shortle' },
+                                { label: 'Laura Castro', value: 'Laura Castro' }
                             ]}
                             selectedValue={doctor}
                             onValueChange={(value) => setDoctor(value)}
@@ -110,7 +119,7 @@ export default function AddPatient({route}) {
 
                         {/* Add button */}
                         <TouchableOpacity
-                            style={[styles.button, {backgroundColor: 'green'}]}
+                            style={[styles.button, {backgroundColor: '#3B80C8'}]}
                             onPress = {onClickCalculateButton}>
                             <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, , {textAlign: 'center'}]}>ADD</Text>
                         </TouchableOpacity>

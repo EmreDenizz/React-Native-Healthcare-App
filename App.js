@@ -25,7 +25,7 @@ export default function App() {
                 <Stack.Screen name="AddPatient" component = {AddPatientScreen} /> 
                 <Stack.Screen name="PatientDetails" component = {PatientDetailsScreen} /> 
                 <Stack.Screen name="UpdatePatient" component = {UpdatePatientScreen} /> 
-                <Stack.Screen name="AddTestRecordScreen" component = {AddTestRecordScreen} /> 
+                <Stack.Screen name="AddTestRecord" component = {AddTestRecordScreen} /> 
                 <Stack.Screen name="UpdateTestRecord" component = {UpdateTestRecordScreen} /> 
             </Stack.Navigator> 
         </NavigationContainer> 
