@@ -1,3 +1,9 @@
+/**
+ * @file App.js -> React Native Healthcare App
+ * @author Emre Deniz
+ * @author Muindo Gituku
+ */
+
 import * as React from 'react';
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
@@ -12,7 +18,7 @@ import UpdateTestRecordScreen from './screens/UpdateTestRecord'
 const Stack = createNativeStackNavigator()
 
 export default function App() {
-    return ( 
+    return (
         <NavigationContainer> 
             <Stack.Navigator> 
                 <Stack.Screen name="Patients" component = {PatientsScreen} /> 
