@@ -112,14 +112,14 @@ export default function UpdatePatient({navigation}) {
                         <TouchableOpacity
                             style={[styles.button, {backgroundColor: '#3B80C8'}]}
                             onPress = {onClickCalculateButton}>
-                            <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, , {textAlign: 'center'}]}>UPDATE</Text>
+                            <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, , {textAlign: 'center'}]}>Update</Text>
                         </TouchableOpacity>
 
                         {/* Cancel button */}
                         <TouchableOpacity
                             style={[styles.button, {backgroundColor: 'red'}]}
                             onPress={() => navigation.navigate('Patients')}>
-                            <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>CANCEL</Text>
+                            <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>Cancel</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        backgroundColor: "white"
         // justifyContent: 'center',
     },
     wrapper: {
