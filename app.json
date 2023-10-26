@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "HealthcareApp",
+    "slug": "HealthcareApp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "img/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+        "package": "com.anonymous.HealthcareApp"
+    }
+  }
+}
