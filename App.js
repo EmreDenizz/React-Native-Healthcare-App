@@ -19,12 +19,12 @@ const Stack = createNativeStackNavigator()
 
 export default function App() {
     return (
-        <NavigationContainer> 
+        <NavigationContainer>
             <Stack.Navigator> 
                 <Stack.Screen name="Patients" component = {PatientsScreen} /> 
                 <Stack.Screen name="AddPatient" component = {AddPatientScreen} /> 
-                <Stack.Screen name="PatientDetails" component = {PatientDetailsScreen} /> 
                 <Stack.Screen name="UpdatePatient" component = {UpdatePatientScreen} /> 
+                <Stack.Screen name="PatientDetails" component = {PatientDetailsScreen} /> 
                 <Stack.Screen name="AddTestRecord" component = {AddTestRecordScreen} /> 
                 <Stack.Screen name="UpdateTestRecord" component = {UpdateTestRecordScreen} /> 
             </Stack.Navigator> 

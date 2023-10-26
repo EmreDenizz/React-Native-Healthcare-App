@@ -19,36 +19,20 @@ export default function AddPatient({navigation}) {
     const [department, setDepartment] = React.useState('');
     const [doctor, setDoctor] = React.useState('');
   
-    // Calculate button function
-    function onClickCalculateButton() {
-        // Calculate bmi with related formulas
-        var bmiCalculated = 0;
-        if(selectedUnit == 'Imperial System'){
-            bmiCalculated = (weight / (height * height) * 703).toFixed(1);
-        }
-        else{
-            var heightM = height / 100;
-            bmiCalculated = (weight / (heightM * heightM)).toFixed(1);
-        }
+    // Add button function
+    function onClickAddButton() {
 
-        // Set bmi color
-        if(bmiCalculated < 18.5){ setBmiColor('blue'); }
-        else if(bmiCalculated < 25){ setBmiColor('green'); }
-        else if(bmiCalculated < 30){ setBmiColor('orange'); }
-        else if(bmiCalculated >= 30){ setBmiColor('red'); }
-
-        setBmi(bmiCalculated);
     };
 
     return (
         <View> 
-            <Text> 
+            <Text>
                 <SafeAreaView style = {styles.container}>
                     <View style = {styles.wrapper}>
                         {/* Header Title */}
                         <Text style={styles.header}>Add New Patient</Text>
 
-                        {/* Input fields */}
+                        {/* Text Input fields and Dropdowns */}
                         <TextInput
                             style = {styles.inputStyle}
                             value = {firstName}
@@ -112,7 +96,7 @@ export default function AddPatient({navigation}) {
                         {/* Add button */}
                         <TouchableOpacity
                             style={[styles.button, {backgroundColor: '#3B80C8'}]}
-                            onPress = {onClickCalculateButton}>
+                            onPress = {onClickAddButton}>
                             <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, , {textAlign: 'center'}]}>Add</Text>
                         </TouchableOpacity>
 
@@ -136,7 +120,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         backgroundColor: "white"
-        // justifyContent: 'center',
     },
     wrapper: {
         padding: 30,

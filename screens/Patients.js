@@ -5,23 +5,64 @@
  */
 
 import * as React from 'react';
-import { Text, View, Button, StyleSheet, TouchableOpacity, SafeAreaView, TextInput, Image } from 'react-native';
-import { useState } from 'react'
+import { Text, View, Button, StyleSheet, TouchableOpacity, SafeAreaView, TextInput, Image, ScrollView } from 'react-native';
+import { useState, useEffect } from 'react'
 
 export default function Patients({navigation}) {
     // State hooks
     const [search, setSearch] = React.useState('');
+    const [patients, setPatients] = React.useState('');
 
-    // View button action
-    function onClickViewButton() {
+    // Get all patients from API
+    const listPatients = async() => {
+        await fetch("http://10.0.0.238:3000/patients").
+        then((response) => response.json()).
+        then((json) => {
+            setPatients(json)
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+    useEffect(() => {
+        listPatients();
+    }, []);
+
+    // Filter buttons actions
+    function onClickFilterButton() {
         
     };
+
+    // List of Patients
+    var patientsList = [];
+    for(let i = 0; i < patients.length; i++){
+		patientsList.push(
+			<View key = {i} style={styles.wrapperElement}>
+                <View style={{width: 215}}>
+                    <Text style={styles.subHeader}>{patients[i].first_name+" "+patients[i].last_name}</Text>
+                    <Text style={{color: "#3B80C8"}}>{patients[i].department}</Text>
+                    <Text>{patients[i].doctor}</Text>
+                </View>
+                <View>
+                    <TouchableOpacity
+                        style={[styles.buttonRight, {backgroundColor: '#3B80C8'}]}
+                        onPress={() => navigation.navigate('PatientDetails', patients[i]._id)}>
+                        <Text style={[{color: 'white'}, {fontSize: 18}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>View</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+		)
+	}
 
     return (
         <SafeAreaView style = {styles.container}>
             <Button
                 title="Update Patient" 
                 onPress={() => navigation.navigate('UpdatePatient')}
+            />
+            <Button
+                title="Patient Details" 
+                onPress={() => navigation.navigate('PatientDetails')}
             />
             <Button
                 title="Add Test Record" 
@@ -31,7 +72,7 @@ export default function Patients({navigation}) {
                 title="Update Test Record" 
                 onPress={() => navigation.navigate('UpdateTestRecord')}
             />
-            <View style = {styles.wrapper}>
+            <ScrollView style = {styles.wrapper}>
 
                 {/* Logo, Header, Add Icon */}
                 <View style={{flexDirection: 'row'}}>
@@ -51,21 +92,21 @@ export default function Patients({navigation}) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                        
+
                 {/* Quick filter buttons */}
                 <View style={{flexDirection: 'row'}}>
                     <View>
                         <TouchableOpacity
                             style={[styles.buttonLeft, {backgroundColor: '#3B80C8'}]}
-                            onPress = {onClickViewButton}>
-                            <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>All</Text>
+                            onPress = {onClickFilterButton}>
+                            <Text style={[{color: 'white'}, {fontSize: 18}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>All</Text>
                         </TouchableOpacity>
                     </View>
                     <View>
                         <TouchableOpacity
                             style={[styles.buttonLeft, {backgroundColor: 'red'}, {marginLeft: 10}]}
-                            onPress = {onClickViewButton}>
-                            <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>Critical</Text>
+                            onPress = {onClickFilterButton}>
+                            <Text style={[{color: 'white'}, {fontSize: 18}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>Critical</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -79,22 +120,10 @@ export default function Patients({navigation}) {
                 />
 
                 {/* List of Patients */}
-                <View style={styles.wrapperElement}>
-                    <View>
-                        <Text style={styles.subHeader}>Lisa Miles</Text>
-                        <Text style={{color: "#3B80C8"}}>Neurology</Text>
-                        <Text>Dr. Melinda Binder</Text>
-                    </View>
-                    <View>
-                        <TouchableOpacity
-                            style={[styles.buttonRight, {backgroundColor: '#3B80C8'}]}
-                            onPress={() => navigation.navigate('PatientDetails', "ID")}>
-                            <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>View</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                {patientsList}
 
-            </View>
+                <Text>{"\n"}{"\n"}{"\n"}</Text>
+            </ScrollView>
 
         </SafeAreaView>
     );
@@ -106,7 +135,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         backgroundColor: "white"
-        // justifyContent: 'center',
     },
     wrapper: {
         padding: 30,
@@ -120,8 +148,8 @@ const styles = StyleSheet.create({
         borderRadius: 0,
         borderWidth: 1,
         borderColor: 'black',
-        alignItems: "flex-start",
-        flexDirection: 'row'
+        flexDirection: 'row',
+        flex: 2,
     },
     header: {
         fontSize: 26,
@@ -160,10 +188,10 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         backgroundColor: '#3B80C8',
         borderRadius: 0,
-        width: 80,
-        position: 'absolute',
-        marginTop: 12,
-        left: 110
+        width: 60,
+        position: "absolute",
+        marginTop: 15,
+        left: 30
     },
     buttonLeft: {
         paddingTop: 10,

@@ -18,25 +18,9 @@ export default function UpdatePatient({navigation}) {
     const [department, setDepartment] = React.useState('');
     const [doctor, setDoctor] = React.useState('');
   
-    // Calculate button function
-    function onClickCalculateButton() {
-        // Calculate bmi with related formulas
-        var bmiCalculated = 0;
-        if(selectedUnit == 'Imperial System'){
-            bmiCalculated = (weight / (height * height) * 703).toFixed(1);
-        }
-        else{
-            var heightM = height / 100;
-            bmiCalculated = (weight / (heightM * heightM)).toFixed(1);
-        }
+    // Update button function
+    function onClickUpdateButton() {
 
-        // Set bmi color
-        if(bmiCalculated < 18.5){ setBmiColor('blue'); }
-        else if(bmiCalculated < 25){ setBmiColor('green'); }
-        else if(bmiCalculated < 30){ setBmiColor('orange'); }
-        else if(bmiCalculated >= 30){ setBmiColor('red'); }
-
-        setBmi(bmiCalculated);
     };
 
     return (
@@ -47,7 +31,7 @@ export default function UpdatePatient({navigation}) {
                         {/* Header Title */}
                         <Text style={styles.header}>Update Patient</Text>
 
-                        {/* Input fields */}
+                        {/* Text Input fields and Dropdowns */}
                         <TextInput
                             style = {styles.inputStyle}
                             value = {firstName}
@@ -111,7 +95,7 @@ export default function UpdatePatient({navigation}) {
                         {/* Add button */}
                         <TouchableOpacity
                             style={[styles.button, {backgroundColor: '#3B80C8'}]}
-                            onPress = {onClickCalculateButton}>
+                            onPress = {onClickUpdateButton}>
                             <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, , {textAlign: 'center'}]}>Update</Text>
                         </TouchableOpacity>
 
@@ -135,7 +119,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         backgroundColor: "white"
-        // justifyContent: 'center',
     },
     wrapper: {
         padding: 30,
