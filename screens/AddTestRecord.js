@@ -28,9 +28,9 @@ export default function AddTestRecord({ navigation }) {
   function onClickAddButton() {}
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View><Text><SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
-        <Text style={styles.header}>Add New Patient</Text>
+        <Text style={styles.header}>Add New Test</Text>
 
         {/* Text Input fields and Dropdowns */}
         <TextInput
@@ -103,7 +103,7 @@ export default function AddTestRecord({ navigation }) {
         {/* Cancel button */}
         <TouchableOpacity
           style={[styles.button, { backgroundColor: "red" }]}
-          onPress={() => navigation.navigate("Patients")}
+          onPress={() => navigation.pop()}
         >
           <Text
             style={[
@@ -117,7 +117,7 @@ export default function AddTestRecord({ navigation }) {
           </Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </SafeAreaView></Text></View>
   );
 }
 

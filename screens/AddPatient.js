@@ -30,7 +30,7 @@ export default function AddPatient({navigation}) {
                 <SafeAreaView style = {styles.container}>
                     <View style = {styles.wrapper}>
                         {/* Header Title */}
-                        <Text style={styles.header}>Add New Test</Text>
+                        <Text style={styles.header}>Add New Patient</Text>
 
                         {/* Text Input fields and Dropdowns */}
                         <TextInput
@@ -103,7 +103,7 @@ export default function AddPatient({navigation}) {
                         {/* Cancel button */}
                         <TouchableOpacity
                             style={[styles.button, {backgroundColor: 'red'}]}
-                            onPress={() => navigation.navigate('Patients')}>
+                                onPress={() => navigation.pop()}>
                             <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>Cancel</Text>
                         </TouchableOpacity>
                     </View>

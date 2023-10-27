@@ -111,7 +111,8 @@ function singleMedicalRecord(navigation) {
                 >
                 <Image source={require("../img/expand.png")}></Image>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('UpdateTestRecord')}>
+                
                 <Image source={require("../img/edit.png")}></Image>
             </TouchableOpacity>
             <TouchableOpacity>
