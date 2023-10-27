@@ -30,7 +30,7 @@ export default function AddPatient({navigation}) {
                 <SafeAreaView style = {styles.container}>
                     <View style = {styles.wrapper}>
                         {/* Header Title */}
-                        <Text style={styles.header}>Add New Patient</Text>
+                        <Text style={styles.header}>Add New Test</Text>
 
                         {/* Text Input fields and Dropdowns */}
                         <TextInput
@@ -113,6 +113,8 @@ export default function AddPatient({navigation}) {
         </View> 
     );
 }
+
+
 
 // Style definitions
 const styles = StyleSheet.create({

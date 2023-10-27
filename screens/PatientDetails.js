@@ -16,7 +16,6 @@ import {
   FlatList,
 } from "react-native";
 import { useState } from "react";
-import AddTestRecord from "./AddTestRecord";
 
 export default function PatientDetails({ navigation }) {
   return (
