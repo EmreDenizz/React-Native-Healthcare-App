@@ -11,9 +11,10 @@ import {
   Button,
   StyleSheet,
   TouchableOpacity,
-  SafeAreaView, TextInput, Dropdown
+  SafeAreaView, TextInput
 } from "react-native";
 import { useState } from "react";
+import Dropdown from 'react-native-input-select';
 
 export default function AddTestRecord({ navigation }) {
   // State hooks
