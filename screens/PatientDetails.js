@@ -16,6 +16,7 @@ import {
   FlatList,
 } from "react-native";
 import { useState } from "react";
+import AddTestRecord from "./AddTestRecord";
 
 export default function PatientDetails({ navigation }) {
   return (
@@ -26,29 +27,16 @@ export default function PatientDetails({ navigation }) {
           <View style={styles.patientDetails}>
             <Text style={styles.nameStyle}>John Doe</Text>
             <Text>Date of Birth: Oct 7, 2023</Text>
+            <Text>Address: 941 Progress Avenue, Toronto M1B 1R2</Text>
+            <Text>Department: Emergency Response</Text>
+            <Text>Doctor: Meredith Greey</Text>
           </View>
         </View>
-        <View style={styles.medicalHistoryWrapper}>
-          <View style={styles.medicalHistoryContainer}>
-            <Text>Blood Pressure</Text>
-            <Text>Nurse David McRoe</Text>
-            <View style={styles.medicalHistoryTest}>
-              <Text>70/150:</Text>
-              <Text>Impressive</Text>
-            </View>
-          </View>
-          <View style={styles.medicalHistoryButtons}>
-            <TouchableOpacity>
-                <Image source={require("../img/expand.png")}></Image>
-            </TouchableOpacity>
-            <TouchableOpacity>
-            <Image source={require("../img/edit.png")}></Image>
-            </TouchableOpacity>
-            <TouchableOpacity>
-            <Image source={require("../img/delete.png")}></Image>
-            </TouchableOpacity>
-          </View>
-        </View>
+        {singleMedicalRecord(navigation)}
+        {singleMedicalRecord(navigation)}
+        {singleMedicalRecord(navigation)}
+        {singleMedicalRecord(navigation)}
+        {singleMedicalRecord(navigation)}
       </View>
     </SafeAreaView>
   );
@@ -68,7 +56,7 @@ const styles = StyleSheet.create({
   patientProfile:{
     flexDirection:"row",
     justifyContent:'left',
-    alignItems:'center',
+    alignItems:'flex-start',
     marginBottom:40,
   },
   medicalHistoryWrapper:{
@@ -78,6 +66,7 @@ const styles = StyleSheet.create({
     borderWidth:1,
     borderRadius:15,
     padding:10,
+    marginBottom:15,
   },
   medicalHistoryTest:{
     flexDirection:'row',
@@ -88,3 +77,28 @@ const styles = StyleSheet.create({
     justifyContent:'space-between',
   }
 });
+function singleMedicalRecord(navigation) {
+    return <View style={styles.medicalHistoryWrapper}>
+        <View style={styles.medicalHistoryContainer}>
+            <Text>Blood Pressure</Text>
+            <Text>Nurse David McRoe</Text>
+            <View style={styles.medicalHistoryTest}>
+                <Text>70/150:</Text>
+                <Text>Impressive</Text>
+            </View>
+        </View>
+        <View style={styles.medicalHistoryButtons}>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('AddTestRecord')}>
+                <Image source={require("../img/expand.png")}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Image source={require("../img/edit.png")}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Image source={require("../img/delete.png")}></Image>
+            </TouchableOpacity>
+        </View>
+    </View>;
+}
+
