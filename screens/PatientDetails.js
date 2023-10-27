@@ -4,63 +4,87 @@
  * @author Muindo Gituku
  */
 
-import * as React from 'react';
-import { Text, View, Button, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
-import { useState } from 'react'
+import * as React from "react";
+import {
+  Text,
+  View,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+  Image,
+  FlatList,
+} from "react-native";
+import { useState } from "react";
 
-export default function PatientDetails({navigation}) {
-    return (
-        <SafeAreaView style = {styles.container}>
-            <View style = {styles.wrapper}>
-                <Text> 
-                Patient Details
-                </Text> 
+export default function PatientDetails({ navigation }) {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.wrapper}>
+        <View style={styles.patientProfile}>
+          <Image source={require("../img/user_icon.png")}></Image>
+          <View style={styles.patientDetails}>
+            <Text style={styles.nameStyle}>John Doe</Text>
+            <Text>Date of Birth: Oct 7, 2023</Text>
+          </View>
+        </View>
+        <View style={styles.medicalHistoryWrapper}>
+          <View style={styles.medicalHistoryContainer}>
+            <Text>Blood Pressure</Text>
+            <Text>Nurse David McRoe</Text>
+            <View style={styles.medicalHistoryTest}>
+              <Text>70/150:</Text>
+              <Text>Impressive</Text>
             </View>
-        </SafeAreaView>
-    );
+          </View>
+          <View style={styles.medicalHistoryButtons}>
+            <TouchableOpacity>
+                <Image source={require("../img/expand.png")}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity>
+            <Image source={require("../img/edit.png")}></Image>
+            </TouchableOpacity>
+            <TouchableOpacity>
+            <Image source={require("../img/delete.png")}></Image>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
 }
 
 // Style definitions
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        // justifyContent: 'center',
-    },
-    wrapper: {
-        padding: 30,
-    },
-    header: {
-        fontSize: 26,
-        marginBottom: 5,
-        fontWeight: 'bold',
-        textAlign: 'center'
-    },
-    inputStyle: {
-        fontSize: 20,
-        padding: 10,
-        marginTop: 10,
-        height: 55,
-        width: 330,
-        borderWidth: 1,
-        borderColor: 'black',
-        borderRadius: 0
-    },
-    button: {
-        marginTop: 10,
-        paddingTop: 10,
-        paddingBottom: 10,
-        textAlign: 'center',
-        borderRadius: 0,
-        width: 330
-    },
-    output: {
-        fontSize: 44,
-        fontWeight: 'bold',
-        marginTop: 10
-    },
-    explanations: {
-        fontSize: 20,
-        marginTop: 5
-    }
+  container: {
+    alignItems: "left",
+  },
+  wrapper: {
+    paddingBottom: 10,
+    paddingTop: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  patientProfile:{
+    flexDirection:"row",
+    justifyContent:'left',
+    alignItems:'center',
+    marginBottom:40,
+  },
+  medicalHistoryWrapper:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    borderWidth:1,
+    borderRadius:15,
+    padding:10,
+  },
+  medicalHistoryTest:{
+    flexDirection:'row',
+  },
+  medicalHistoryButtons:{
+    width:'35%',
+    flexDirection:'row',
+    justifyContent:'space-between',
+  }
 });
