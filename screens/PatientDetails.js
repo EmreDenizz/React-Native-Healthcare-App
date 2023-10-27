@@ -25,13 +25,15 @@ export default function PatientDetails({ navigation }) {
         <View style={styles.patientProfile}>
           <Image source={require("../img/user_icon.png")}></Image>
           <View style={styles.patientDetails}>
-            <Text style={styles.nameStyle}>John Doe</Text>
-            <Text>Date of Birth: Oct 7, 2023</Text>
-            <Text>Address: 941 Progress Avenue, Toronto M1B 1R2</Text>
-            <Text>Department: Emergency Response</Text>
-            <Text>Doctor: Meredith Greey</Text>
+            <Text style={{fontWeight:'bold',fontSize:20,}}>John Doe</Text>
+            <Text style={{fontWeight:'normal',fontSize:13,}}>Date of Birth: Oct 7, 2023</Text>
+            <Text style={{fontWeight:'normal',fontSize:13,}}>Address: 941 Progress Avenue, Toronto M1B 1R2</Text>
+            <Text style={{fontWeight:'normal',fontSize:13,}}>Department: Emergency Response</Text>
+            <Text style={{fontWeight:'normal',fontSize:13,}}>Doctor: Meredith Greey</Text>
           </View>
         </View>
+        <View style={styles.rectangleButtons}><TouchableOpacity onPress={() => navigation.navigate('UpdatePatient')} style={styles.updateButton}><Text style={{fontWeight:'bold',fontSize:14,color:"#fff"}}>Update Profile</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('AddTestRecord')} style={styles.addButton}><Text style={{fontWeight:'bold',fontSize:14,}}>Add Test Record</Text></TouchableOpacity></View>
         {singleMedicalRecord(navigation)}
         {singleMedicalRecord(navigation)}
         {singleMedicalRecord(navigation)}
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
     flexDirection:"row",
     justifyContent:'left',
     alignItems:'flex-start',
-    marginBottom:40,
+    marginBottom:20,
   },
   medicalHistoryWrapper:{
     flexDirection:'row',
@@ -75,7 +77,25 @@ const styles = StyleSheet.create({
     width:'35%',
     flexDirection:'row',
     justifyContent:'space-between',
-  }
+  },
+  rectangleButtons:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    marginBottom:25,
+    },
+    updateButton:{
+        backgroundColor: "#3B80C8",
+        padding:15,
+        borderRadius: 12,
+    },
+    addButton:{
+        backgroundColor: "transparent",
+        padding:15,
+        borderRadius: 12,
+        borderColor:"#3B80C8",
+        borderWidth:2,
+    },
+
 });
 function singleMedicalRecord(navigation) {
     return <View style={styles.medicalHistoryWrapper}>
@@ -89,7 +109,7 @@ function singleMedicalRecord(navigation) {
         </View>
         <View style={styles.medicalHistoryButtons}>
             <TouchableOpacity
-                onPress={() => navigation.navigate('AddTestRecord')}>
+                >
                 <Image source={require("../img/expand.png")}></Image>
             </TouchableOpacity>
             <TouchableOpacity>

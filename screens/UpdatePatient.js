@@ -61,7 +61,7 @@ export default function UpdatePatient({navigation}) {
                         <Dropdown
                             placeholder="Select an option..."
                             options={[
-                                { label: 'Emergency', value: 'Cardiology' },
+                                { label: 'Emergency', value: 'Emergency' },
                                 { label: 'Cardiology', value: 'Cardiology' },
                                 { label: 'Psychiatry', value: 'Psychiatry' },
                                 { label: 'Hematology', value: 'Hematology' },
