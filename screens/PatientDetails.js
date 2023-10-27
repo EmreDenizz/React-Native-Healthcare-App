@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   },
   medicalHistoryTest:{
     flexDirection:'row',
+    alignItems:'center',
   },
   medicalHistoryButtons:{
     width:'35%',
@@ -99,11 +100,11 @@ const styles = StyleSheet.create({
 function singleMedicalRecord(navigation) {
     return <View style={styles.medicalHistoryWrapper}>
         <View style={styles.medicalHistoryContainer}>
-            <Text>Blood Pressure</Text>
+            <Text style={{fontWeight:'900',}}>Blood Pressure</Text>
             <Text>Nurse David McRoe</Text>
             <View style={styles.medicalHistoryTest}>
-                <Text>70/150:</Text>
-                <Text>Impressive</Text>
+                <Text style={{textTransform:'uppercase',color:'black',fontSize:12,fontWeight:'300',}}>70/150:</Text>
+                <Text style={{textTransform:'uppercase',color:'green',fontSize:12,fontWeight:'900',paddingLeft:5,}}>Impressive</Text>
             </View>
         </View>
         <View style={styles.medicalHistoryButtons}>
