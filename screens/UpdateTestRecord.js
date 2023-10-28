@@ -117,8 +117,7 @@ export default function UpdateTestRecord({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        backgroundColor: "white"
+        alignItems: 'center'
         // justifyContent: 'center',
     },
     wrapper: {

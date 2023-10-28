@@ -47,8 +47,7 @@ export default function PatientDetails({ navigation }) {
 // Style definitions
 const styles = StyleSheet.create({
     container: {
-        alignItems: "left",
-        backgroundColor: "white"
+        alignItems: "left"
     },
     wrapper: {
         paddingBottom: 10,

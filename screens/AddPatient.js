@@ -60,7 +60,7 @@ export default function AddPatient({navigation}) {
                         <Text> </Text>
                         <Text>Department:</Text>
                         <Dropdown
-                            placeholder="Select an option..."
+                            placeholder="Select a department..."
                             options={[
                                 { label: 'Emergency', value: 'Cardiology' },
                                 { label: 'Cardiology', value: 'Cardiology' },
@@ -77,7 +77,7 @@ export default function AddPatient({navigation}) {
                         />
                         <Text>Doctor:</Text>
                         <Dropdown
-                            placeholder="Select an option..."
+                            placeholder="Select a doctor..."
                             options={[
                                 { label: 'Megan Garner', value: 'Megan Garner' },
                                 { label: 'Luke White', value: 'Luke White' },
@@ -120,8 +120,7 @@ export default function AddPatient({navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        backgroundColor: "white"
+        alignItems: 'center'
     },
     wrapper: {
         padding: 30,
