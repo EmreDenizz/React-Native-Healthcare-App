@@ -56,22 +56,6 @@ export default function Patients({navigation}) {
 
     return (
         <SafeAreaView style = {styles.container}>
-            <Button
-                title="Update Patient" 
-                onPress={() => navigation.navigate('UpdatePatient')}
-            />
-            <Button
-                title="Patient Details" 
-                onPress={() => navigation.navigate('PatientDetails')}
-            />
-            <Button
-                title="Add Test Record" 
-                onPress={() => navigation.navigate('AddTestRecord')}
-            />
-            <Button
-                title="Update Test Record" 
-                onPress={() => navigation.navigate('UpdateTestRecord')}
-            />
             <ScrollView style = {styles.wrapper}>
 
                 {/* Logo, Header, Add Icon */}

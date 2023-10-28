@@ -55,7 +55,7 @@ export default function AddPatient({navigation}) {
                             style = {styles.inputStyle}
                             value = {dateOfBirth}
                             onChangeText = {text => setDateOfBirth(text)}
-                            placeholder = {"Date of Birth"}
+                            placeholder = {"Date of Birth (YYYY-MM-DD)"}
                         />
                         <Text> </Text>
                         <Text>Department:</Text>

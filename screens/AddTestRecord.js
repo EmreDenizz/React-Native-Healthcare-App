@@ -43,7 +43,7 @@ export default function AddTestRecord({ navigation }) {
           style={styles.inputStyle}
           value={date}
           onChangeText={(text) => setdate(text)}
-          placeholder={"Test Daate"}
+          placeholder={"Test Date (YYYY-MM-DD)"}
         />
         <Text> </Text>
         <Text>Type:</Text>

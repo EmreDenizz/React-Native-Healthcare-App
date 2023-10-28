@@ -5,27 +5,20 @@
  */
 
 import * as React from "react";
-import {
-  Text,
-  View,
-  Button,
-  StyleSheet,
-  TouchableOpacity,
-  SafeAreaView, TextInput
-} from "react-native";
+import { Text, View, Button, StyleSheet, TouchableOpacity, SafeAreaView, TextInput } from "react-native";
 import { useState } from "react";
 import Dropdown from 'react-native-input-select';
 
 export default function UpdateTestRecord({navigation}) {
-      // State hooks
+// State hooks
   const [nurse_name, setnurse_name] = React.useState("");
   const [date, setdate] = React.useState("");
   const [type, settype] = React.useState("");
   const [category, setcategory] = React.useState("");
   const [reading, setreading] = React.useState("");
 
-  // Add button function
-  function onClickAddButton() {}
+  // Update button function
+  function onClickUpdateButton() {}
 
     return (
         <View><Text><SafeAreaView style={styles.container}>
@@ -43,7 +36,7 @@ export default function UpdateTestRecord({navigation}) {
               style={styles.inputStyle}
               value={date}
               onChangeText={(text) => setdate(text)}
-              placeholder={"Test Daate"}
+              placeholder={"Test Date (YYYY-MM-DD)"}
             />
             <Text> </Text>
             <Text>Type:</Text>
@@ -85,18 +78,17 @@ export default function UpdateTestRecord({navigation}) {
             {/* Add button */}
             <TouchableOpacity
               style={[styles.button, { backgroundColor: "#3B80C8" }]}
-              onPress={onClickAddButton}
+              onPress={onClickUpdateButton}
             >
               <Text
                 style={[
                   { color: "white" },
                   { fontSize: 22 },
                   { fontWeight: "bold" },
-                  ,
-                  { textAlign: "center" },
+                  { textAlign: "center" }
                 ]}
               >
-                Add
+                Update
               </Text>
             </TouchableOpacity>
     
@@ -126,6 +118,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
+        backgroundColor: "white"
         // justifyContent: 'center',
     },
     wrapper: {
