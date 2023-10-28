@@ -17,4 +17,6 @@ npx expo start
 
 ### SCREENSHOTS:
 <kbd><img src="screenshots/ss_1.png" height="500"/></kbd>    <kbd><img src="screenshots/ss_2.png" height="500"/></kbd>    <kbd><img src="screenshots/ss_3.png" height="500"/></kbd>
+
+
 <kbd><img src="screenshots/ss_4.png" height="500"/></kbd>    <kbd><img src="screenshots/ss_5.png" height="500"/></kbd>    <kbd><img src="screenshots/ss_6.png" height="500"/></kbd> 
