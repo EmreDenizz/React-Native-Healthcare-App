@@ -84,13 +84,31 @@ export default function Patients({route, navigation}) {
 
     // "All" button actions
     function onClickAllButton() {
+        setSearch("");
         getAllPatientsFromAPI();
         listAllPatients();
     };
 
     // "Critical" button actions
     function onClickCriticalButton() {
+        setSearch("");
         getCriticalPatientsFromAPI();
+        listAllPatients();
+    };
+
+    // "Search" button actions
+    function onClickSearchButton() {
+        setPatients([]);
+        fetch("http://10.0.0.238:3000/patients/search/"+search).
+            then((response) => response.json()).
+            then((json) => {
+                if(json != "No patients found"){
+                    setPatients(json)
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            })
         listAllPatients();
     };
 
@@ -141,9 +159,9 @@ export default function Patients({route, navigation}) {
                     </View>
                     <View>
                         <TouchableOpacity
-                            style={[styles.buttonLeft, {marginLeft: 135}]}
+                            style={[styles.buttonLeft, {marginLeft: 15, marginTop: 23}]}
                             onPress = {onClickAllButton}>
-                            <Image source={require('../img/refresh.png')} style={[{width: 30}, {height: 30}]} />
+                            <Image source={require('../img/refresh.png')} style={[{width: 33}, {height: 33}]} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -158,7 +176,7 @@ export default function Patients({route, navigation}) {
                     />
                     <TouchableOpacity
                         style={[styles.buttonLeft, {marginLeft: 10, marginTop: 15}]}
-                        onPress = {onClickAllButton}>
+                        onPress = {onClickSearchButton}>
                         <Image source={require('../img/search.png')} style={[{width: 40}, {height: 40}]} />
                     </TouchableOpacity>
                 </View>
