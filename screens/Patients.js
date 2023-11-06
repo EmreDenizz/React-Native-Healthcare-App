@@ -54,7 +54,7 @@ export default function Patients({navigation}) {
                         <View>
                             <TouchableOpacity
                                 style={[styles.buttonRight, {backgroundColor: 'red'}]}
-                                onPress={() => navigation.navigate('PatientDetails', patients[i]._id)}>
+                                onPress={() => navigation.navigate('PatientDetails', {patient_id: patients[i]._id})}>
                                 <Text style={[{color: 'white'}, {fontSize: 18}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>View</Text>
                             </TouchableOpacity>
                         </View>
@@ -72,7 +72,7 @@ export default function Patients({navigation}) {
                         <View>
                             <TouchableOpacity
                                 style={[styles.buttonRight, {backgroundColor: '#3B80C8'}]}
-                                onPress={() => navigation.navigate('PatientDetails', patients[i]._id)}>
+                                onPress={() => navigation.navigate('PatientDetails', {patient_id: patients[i]._id})}>
                                 <Text style={[{color: 'white'}, {fontSize: 18}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>View</Text>
                             </TouchableOpacity>
                         </View>
@@ -94,7 +94,7 @@ export default function Patients({navigation}) {
         listAllPatients();
     };
 
-    // Call these functions while page loading to fetch patiets and display them
+    // Call these functions while page loading to fetch patients and display them
     useEffect(() => {
         getAllPatientsFromAPI();
     }, []);

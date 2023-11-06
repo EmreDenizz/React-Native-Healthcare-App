@@ -6,9 +6,40 @@
 
 import * as React from "react";
 import { Text, View, Button, StyleSheet, TouchableOpacity, SafeAreaView, Image, FlatList } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from 'react'
 
-export default function PatientDetails({ navigation }) {
+export default function PatientDetails({ route, navigation }) {
+    // State hooks
+    const [patientName, setPatientName] = React.useState('');
+    const [dateOfBirth, setDateOfBirth] = React.useState('');
+    const [address, setAddress] = React.useState('');
+    const [department, setDepartment] = React.useState('');
+    const [doctor, setDoctor] = React.useState('');
+
+    // Get patient id from navigation
+    var patient_id = route.params.patient_id;
+
+    // Get patient details from API
+    const getAllPatientDetailsFromAPI = async() => {
+        await fetch("http://10.0.0.238:3000/patients/"+patient_id).
+        then((response) => response.json()).
+        then((json) => {
+            setPatientName(json.first_name+" "+json.last_name)
+            setDateOfBirth(json.date_of_birth)
+            setAddress(json.address)
+            setDepartment(json.department)
+            setDoctor(json.doctor)
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+
+    // Call while page loading to fetch patient details
+    useEffect(() => {
+        getAllPatientDetailsFromAPI();
+    }, []);
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.wrapper}>
@@ -16,11 +47,11 @@ export default function PatientDetails({ navigation }) {
                 <View style={styles.patientProfile}>
                     <Image style={{marginTop: 20}} source={require("../img/user_icon.png")}></Image>
                     <View style={styles.patientDetails}>
-                        <Text style={{fontWeight:'bold',fontSize:22}}>Eddie Miles</Text>
-                        <Text style={{fontWeight:'normal',fontSize:14}}>Date of Birth: 1998-11-09</Text>
-                        <Text style={{fontWeight:'normal',fontSize:14}}>Address: 94 Progress Avenue, Toronto M1B 1R2</Text>
-                        <Text style={{fontWeight:'normal',fontSize:14}}>Department: Emergency Response</Text>
-                        <Text style={{fontWeight:'normal',fontSize:14}}>Doctor: Meredith Greey</Text>
+                        <Text style={{fontWeight:'bold',fontSize:22}}>{patientName}</Text>
+                        <Text style={{fontWeight:'normal',fontSize:14}}>Date of Birth: {dateOfBirth}</Text>
+                        <Text style={{fontWeight:'normal',fontSize:14}}>Address: {address}</Text>
+                        <Text style={{fontWeight:'normal',fontSize:14}}>Department: {department}</Text>
+                        <Text style={{fontWeight:'normal',fontSize:14}}>Doctor: {doctor}</Text>
                     </View>
                 </View>
 
