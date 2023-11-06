@@ -75,6 +75,32 @@ export default function PatientDetails({ route, navigation }) {
     );
 }
 
+// Function for listing records
+function singleMedicalRecord(navigation) {
+    return <View style={styles.medicalHistoryWrapper}>
+                <View style={styles.medicalHistoryContainer}>
+                    <Text style={{fontWeight:'900', fontSize:16}}>Blood Oxygen Level</Text>
+                    <Text>Nurse David McRoe</Text>
+                    <Text>2023-10-25</Text>
+                    <View style={styles.medicalHistoryTest}>
+                        <Text style={{color:'black',fontSize:14}}>Reading:</Text>
+                        <Text style={{fontSize:14,fontWeight:'bold',paddingLeft:5}}>99</Text>
+                    </View>
+                </View>
+                <View style={styles.medicalHistoryButtons}>
+                    {/* <TouchableOpacity>
+                        <Image source={require("../img/expand.png")}></Image>
+                    </TouchableOpacity> */}
+                    <TouchableOpacity onPress={() => navigation.navigate('UpdateTestRecord')}>
+                        <Image source={require("../img/edit.png")}></Image>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image source={require("../img/delete.png")}></Image>
+                    </TouchableOpacity>
+                </View>
+    </View>;
+}
+
 // Style definitions
 const styles = StyleSheet.create({
     container: {
@@ -129,29 +155,3 @@ const styles = StyleSheet.create({
         borderWidth:2
     }
 });
-
-// Function for listing records
-function singleMedicalRecord(navigation) {
-    return <View style={styles.medicalHistoryWrapper}>
-                <View style={styles.medicalHistoryContainer}>
-                    <Text style={{fontWeight:'900', fontSize:16}}>Blood Pressure</Text>
-                    <Text>Nurse David McRoe</Text>
-                    <View style={styles.medicalHistoryTest}>
-                        <Text style={{textTransform:'uppercase',color:'black',fontSize:14}}>70/150:</Text>
-                        <Text style={{textTransform:'uppercase',color:'green',fontSize:14,fontWeight:'900',paddingLeft:5,}}>Impressive</Text>
-                    </View>
-                    <Text>2023-10-25</Text>
-                </View>
-                <View style={styles.medicalHistoryButtons}>
-                    {/* <TouchableOpacity>
-                        <Image source={require("../img/expand.png")}></Image>
-                    </TouchableOpacity> */}
-                    <TouchableOpacity onPress={() => navigation.navigate('UpdateTestRecord')}>
-                        <Image source={require("../img/edit.png")}></Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image source={require("../img/delete.png")}></Image>
-                    </TouchableOpacity>
-                </View>
-    </View>;
-}
