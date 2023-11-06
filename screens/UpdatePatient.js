@@ -9,7 +9,7 @@ import { useState } from 'react'
 import { Text, View, TouchableOpacity, SafeAreaView, TextInput, StyleSheet } from 'react-native';
 import Dropdown from 'react-native-input-select';
 
-export default function UpdatePatient({navigation}) {
+export default function UpdatePatient({route, navigation}) {
     // State hooks
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
@@ -17,6 +17,9 @@ export default function UpdatePatient({navigation}) {
     const [dateOfBirth, setDateOfBirth] = React.useState('');
     const [department, setDepartment] = React.useState('');
     const [doctor, setDoctor] = React.useState('');
+
+    // Get patient id from navigation
+    var patient_id = route.params.patient_id;
   
     // Update button function
     function onClickUpdateButton() {
@@ -102,7 +105,7 @@ export default function UpdatePatient({navigation}) {
                         {/* Cancel button */}
                         <TouchableOpacity
                             style={[styles.button, {backgroundColor: 'red'}]}
-                            onPress={() => navigation.navigate('Patients')}>
+                            onPress={() => navigation.navigate('PatientDetails', {patient_id: patient_id})}>
                             <Text style={[{color: 'white'}, {fontSize: 22}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>Cancel</Text>
                         </TouchableOpacity>
                     </View>

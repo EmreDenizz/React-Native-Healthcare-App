@@ -144,18 +144,24 @@ export default function Patients({route, navigation}) {
                             style={[styles.buttonLeft, {marginLeft: 135}]}
                             onPress = {onClickAllButton}>
                             <Image source={require('../img/refresh.png')} style={[{width: 30}, {height: 30}]} />
-                            {/* <Text style={[{color: 'white'}, {fontSize: 18}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>Refresh</Text> */}
                         </TouchableOpacity>
                     </View>
                 </View>
 
-                {/* Search */}
-                <TextInput
-                    style = {styles.inputStyle}
-                    value = {search}
-                    onChangeText = {text => setSearch(text)}
-                    placeholder = {"Search"}
-                />
+                <View style={{flexDirection: 'row'}}>
+                    {/* Search */}
+                    <TextInput
+                        style = {styles.inputStyle}
+                        value = {search}
+                        onChangeText = {text => setSearch(text)}
+                        placeholder = {"Search"}
+                    />
+                    <TouchableOpacity
+                        style={[styles.buttonLeft, {marginLeft: 10, marginTop: 15}]}
+                        onPress = {onClickAllButton}>
+                        <Image source={require('../img/search.png')} style={[{width: 40}, {height: 40}]} />
+                    </TouchableOpacity>
+                </View>
 
                 {/* List of Patients */}
                 {patientsList}
@@ -206,7 +212,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginTop: 20,
         height: 55,
-        width: 330,
+        width: 270,
         borderWidth: 1,
         borderColor: 'black',
         borderRadius: 0

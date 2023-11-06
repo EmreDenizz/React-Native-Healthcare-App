@@ -40,6 +40,13 @@ export default function PatientDetails({ route, navigation }) {
         getAllPatientDetailsFromAPI();
     }, []);
 
+    // "All" button actions
+    // TODO: add refresh button to fetch tests after adding and updating
+    function onClickRefreshButton() {
+        // getAllTestsFromAPI();
+        // listAllTests();
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.wrapper}>
@@ -57,7 +64,7 @@ export default function PatientDetails({ route, navigation }) {
 
                 {/* Update Patient and Add Test Record buttons */}
                 <View style={styles.rectangleButtons}>
-                    <TouchableOpacity onPress={() => navigation.navigate('UpdatePatient')} style={styles.updateButton}>
+                    <TouchableOpacity onPress={() => navigation.navigate('UpdatePatient', {patient_id: patient_id})} style={styles.updateButton}>
                         <Text style={{fontWeight:'bold',fontSize:14,color:"#fff"}}>Update Patient</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('AddTestRecord')} style={styles.addButton}>
@@ -153,5 +160,14 @@ const styles = StyleSheet.create({
         padding:13,
         borderColor:"#3B80C8",
         borderWidth:2
-    }
+    },
+    buttonLeft: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 15,
+        paddingRight: 15,
+        textAlign: 'center',
+        borderRadius: 0,
+        marginTop: 30
+    },
 });
