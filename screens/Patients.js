@@ -14,7 +14,7 @@ export default function Patients({navigation}) {
     const [patients, setPatients] = React.useState('');
 
     // Get all patients from API
-    const listPatients = async() => {
+    const getAllPatientsFromAPI = async() => {
         await fetch("http://10.0.0.238:3000/patients").
         then((response) => response.json()).
         then((json) => {
@@ -24,35 +24,81 @@ export default function Patients({navigation}) {
             console.error(error);
         })
     }
-    useEffect(() => {
-        listPatients();
-    }, []);
 
-    // Filter buttons actions
-    function onClickFilterButton() {
-        
+    // Get cirtical patients from API
+    const getCriticalPatientsFromAPI = async() => {
+        await fetch("http://10.0.0.238:3000/patients/critical").
+        then((response) => response.json()).
+        then((json) => {
+            setPatients(json)
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+
+    // Patient list to display
+    var patientsList = [];
+
+    // List of All Patients
+    function listAllPatients() {
+        for(let i = 0; i < patients.length; i++){
+            if(patients[i].status == "Critical"){
+                patientsList.push(
+                    <View key = {i} style={styles.wrapperElement}>
+                        <View style={{width: 215}}>
+                            <Text style={styles.subHeader}>{patients[i].first_name+" "+patients[i].last_name}</Text>
+                            <Text style={{color: "#3B80C8"}}>{patients[i].department}</Text>
+                            <Text>{patients[i].doctor}</Text>
+                        </View>
+                        <View>
+                            <TouchableOpacity
+                                style={[styles.buttonRight, {backgroundColor: 'red'}]}
+                                onPress={() => navigation.navigate('PatientDetails', patients[i]._id)}>
+                                <Text style={[{color: 'white'}, {fontSize: 18}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>View</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )
+            }
+            else{
+                patientsList.push(
+                    <View key = {i} style={styles.wrapperElement}>
+                        <View style={{width: 215}}>
+                            <Text style={styles.subHeader}>{patients[i].first_name+" "+patients[i].last_name}</Text>
+                            <Text style={{color: "#3B80C8"}}>{patients[i].department}</Text>
+                            <Text>{patients[i].doctor}</Text>
+                        </View>
+                        <View>
+                            <TouchableOpacity
+                                style={[styles.buttonRight, {backgroundColor: '#3B80C8'}]}
+                                onPress={() => navigation.navigate('PatientDetails', patients[i]._id)}>
+                                <Text style={[{color: 'white'}, {fontSize: 18}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>View</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )
+            }
+        }
+    }
+
+    // "All" button actions
+    function onClickAllButton() {
+        getAllPatientsFromAPI();
+        listAllPatients();
     };
 
-    // List of Patients
-    var patientsList = [];
-    for(let i = 0; i < patients.length; i++){
-		patientsList.push(
-			<View key = {i} style={styles.wrapperElement}>
-                <View style={{width: 215}}>
-                    <Text style={styles.subHeader}>{patients[i].first_name+" "+patients[i].last_name}</Text>
-                    <Text style={{color: "#3B80C8"}}>{patients[i].department}</Text>
-                    <Text>{patients[i].doctor}</Text>
-                </View>
-                <View>
-                    <TouchableOpacity
-                        style={[styles.buttonRight, {backgroundColor: '#3B80C8'}]}
-                        onPress={() => navigation.navigate('PatientDetails', patients[i]._id)}>
-                        <Text style={[{color: 'white'}, {fontSize: 18}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>View</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-		)
-	}
+    // "Critical" button actions
+    function onClickCriticalButton() {
+        getCriticalPatientsFromAPI();
+        listAllPatients();
+    };
+
+    // Call these functions while page loading to fetch patiets and display them
+    useEffect(() => {
+        getAllPatientsFromAPI();
+    }, []);
+    listAllPatients();
 
     return (
         <SafeAreaView style = {styles.container}>
@@ -82,14 +128,14 @@ export default function Patients({navigation}) {
                     <View>
                         <TouchableOpacity
                             style={[styles.buttonLeft, {backgroundColor: '#3B80C8'}]}
-                            onPress = {onClickFilterButton}>
+                            onPress = {onClickAllButton}>
                             <Text style={[{color: 'white'}, {fontSize: 18}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>All</Text>
                         </TouchableOpacity>
                     </View>
                     <View>
                         <TouchableOpacity
                             style={[styles.buttonLeft, {backgroundColor: 'red'}, {marginLeft: 10}]}
-                            onPress = {onClickFilterButton}>
+                            onPress = {onClickCriticalButton}>
                             <Text style={[{color: 'white'}, {fontSize: 18}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>Critical</Text>
                         </TouchableOpacity>
                     </View>
