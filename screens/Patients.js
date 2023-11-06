@@ -8,7 +8,7 @@ import * as React from 'react';
 import { Text, View, Button, StyleSheet, TouchableOpacity, SafeAreaView, TextInput, Image, ScrollView } from 'react-native';
 import { useState, useEffect } from 'react'
 
-export default function Patients({navigation}) {
+export default function Patients({route, navigation}) {
     // State hooks
     const [search, setSearch] = React.useState('');
     const [patients, setPatients] = React.useState('');
@@ -137,6 +137,14 @@ export default function Patients({navigation}) {
                             style={[styles.buttonLeft, {backgroundColor: 'red'}, {marginLeft: 10}]}
                             onPress = {onClickCriticalButton}>
                             <Text style={[{color: 'white'}, {fontSize: 18}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>Critical</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <TouchableOpacity
+                            style={[styles.buttonLeft, {marginLeft: 135}]}
+                            onPress = {onClickAllButton}>
+                            <Image source={require('../img/refresh.png')} style={[{width: 30}, {height: 30}]} />
+                            {/* <Text style={[{color: 'white'}, {fontSize: 18}, {fontWeight: 'bold'}, {textAlign: 'center'}]}>Refresh</Text> */}
                         </TouchableOpacity>
                     </View>
                 </View>

@@ -5,7 +5,7 @@
  */
 
 import * as React from 'react';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Text, View, TouchableOpacity, SafeAreaView, TextInput, StyleSheet } from 'react-native';
 import Dropdown from 'react-native-input-select';
 // import styles from "../styles.js";
@@ -14,14 +14,34 @@ export default function AddPatient({navigation}) {
     // State hooks
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
-    const [address, setAddress] = React.useState('');
     const [dateOfBirth, setDateOfBirth] = React.useState('');
+    const [address, setAddress] = React.useState('');
     const [department, setDepartment] = React.useState('');
     const [doctor, setDoctor] = React.useState('');
   
     // Add button function
     function onClickAddButton() {
-
+        // POST request to API for adding new patient
+        const options = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                first_name: firstName,
+                last_name: lastName,
+                date_of_birth: dateOfBirth,
+                address: address,
+                department: department,
+                doctor: doctor
+            })
+        };
+        fetch('http://10.0.0.238:3000/patients', options)
+            .then(
+                    res => res.json(),
+                    navigation.navigate('Patients', {patientAdded: "Successful"})
+                )
+            .catch((error) => {
+                console.error(error);
+            })
     };
 
     return (
@@ -47,15 +67,15 @@ export default function AddPatient({navigation}) {
                         />
                         <TextInput
                             style = {styles.inputStyle}
-                            value = {address}
-                            onChangeText = {text => setAddress(text)}
-                            placeholder = {"Address"}
+                            value = {dateOfBirth}
+                            onChangeText = {text => setDateOfBirth(text)}
+                            placeholder = {"Date of Birth (DD/MM/YYYY)"}
                         />
                         <TextInput
                             style = {styles.inputStyle}
-                            value = {dateOfBirth}
-                            onChangeText = {text => setDateOfBirth(text)}
-                            placeholder = {"Date of Birth (YYYY-MM-DD)"}
+                            value = {address}
+                            onChangeText = {text => setAddress(text)}
+                            placeholder = {"Address"}
                         />
                         <Text> </Text>
                         <Text>Department:</Text>
@@ -113,8 +133,6 @@ export default function AddPatient({navigation}) {
         </View> 
     );
 }
-
-
 
 // Style definitions
 const styles = StyleSheet.create({
