@@ -34,7 +34,7 @@ export default function AddPatient({navigation}) {
                 doctor: doctor
             })
         };
-        fetch('http://10.0.0.238:3000/patients', options)
+        fetch('http://192.168.17.11:3000/patients', options)
             .then(
                     res => res.json(),
                     navigation.navigate('Patients', {patientAdded: "Successful"})

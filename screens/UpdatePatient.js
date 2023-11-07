@@ -5,7 +5,7 @@
  */
 
 import * as React from 'react';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Text, View, TouchableOpacity, SafeAreaView, TextInput, StyleSheet } from 'react-native';
 import Dropdown from 'react-native-input-select';
 
@@ -17,14 +17,59 @@ export default function UpdatePatient({route, navigation}) {
     const [dateOfBirth, setDateOfBirth] = React.useState('');
     const [department, setDepartment] = React.useState('');
     const [doctor, setDoctor] = React.useState('');
+    const [status, setStatus] = React.useState('');
 
     // Get patient id from navigation
     var patient_id = route.params.patient_id;
+
+    // Get patient details from API
+    const getAllPatientDetailsFromAPI = async() => {
+        await fetch("http://192.168.17.11:3000/patients/"+patient_id).
+        then((response) => response.json()).
+        then((json) => {
+            setFirstName(json.first_name)
+            setLastName(json.last_name)
+            setDateOfBirth(json.date_of_birth)
+            setAddress(json.address)
+            setDepartment(json.department)
+            setDoctor(json.doctor)
+            setStatus(json.status)
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
   
     // Update button function
     function onClickUpdateButton() {
-
+        // PUT request to API for updating patient
+    const options = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            first_name: firstName,
+            last_name: lastName,
+            date_of_birth: dateOfBirth,
+            address: address,
+            department: department,
+            doctor: doctor
+        })
+        
     };
+    fetch('http://192.168.17.11:3000/patients/'+patient_id, options)
+            .then(
+                    res => res.json(),
+                    navigation.navigate('PatientDetails', {patientUpdated: "Successful"})
+                )
+            .catch((error) => {
+                console.error(error);
+            })
+    };
+
+    // Call while page loading to fetch patient details
+    useEffect(() => {
+        getAllPatientDetailsFromAPI();
+    }, []);
 
     return (
         <View> 

@@ -16,12 +16,14 @@ export default function PatientDetails({ route, navigation }) {
     const [department, setDepartment] = React.useState('');
     const [doctor, setDoctor] = React.useState('');
 
+    const [patientTests, setPatientTests] = React.useState([])
+
     // Get patient id from navigation
     var patient_id = route.params.patient_id;
 
     // Get patient details from API
     const getAllPatientDetailsFromAPI = async() => {
-        await fetch("http://10.0.0.238:3000/patients/"+patient_id).
+        await fetch("http://192.168.17.11:3000/patients/"+patient_id).
         then((response) => response.json()).
         then((json) => {
             setPatientName(json.first_name+" "+json.last_name)
@@ -35,16 +37,34 @@ export default function PatientDetails({ route, navigation }) {
         })
     }
 
+    const getAllTestsForPatientFromAPI = async()=>{
+        await fetch("http://192.168.17.11:3000/patients/"+patient_id+"/tests")
+        .then((response)=>response.json())
+        .then((json)=>{
+            setPatientTests(json);
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+
+     function onClickDeleteTestButton(test_record_id){
+        //  fetch("http://192.168.17.11:3000/tests/"+test_record_id, {method:'DELETE'})
+        // .then(()=>getAllTestsForPatientFromAPI());
+    
+    }
+
     // Call while page loading to fetch patient details
     useEffect(() => {
         getAllPatientDetailsFromAPI();
+        getAllTestsForPatientFromAPI();
     }, []);
 
     // "All" button actions
     // TODO: add refresh button to fetch tests after adding and updating
     function onClickRefreshButton() {
-        // getAllTestsFromAPI();
-        // listAllTests();
+        getAllPatientDetailsFromAPI();
+        getAllTestsForPatientFromAPI();
     };
 
     return (
@@ -67,46 +87,62 @@ export default function PatientDetails({ route, navigation }) {
                     <TouchableOpacity onPress={() => navigation.navigate('UpdatePatient', {patient_id: patient_id})} style={styles.updateButton}>
                         <Text style={{fontWeight:'bold',fontSize:14,color:"#fff"}}>Update Patient</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('AddTestRecord')} style={styles.addButton}>
+                    <TouchableOpacity onPress={() => navigation.navigate('AddTestRecord', {patient_id: patient_id})} style={styles.addButton}>
                         <Text style={{fontWeight:'bold',fontSize:14,}}>Add Test Record</Text>   
                     </TouchableOpacity>
                 </View>
 
                 {/* List of Tests */}
+
+                <FlatList
+                    data={patientTests.reverse()}
+                    // onRefresh={()=> getAllTestsForPatientFromAPI()}
+                    // refreshing:false
+                    renderItem={(test)=>{
+                        return singleMedicalRecord(navigation, test.item.category, test.item.nurse_name, test.item.date, test.item.readings, test.item._id)
+                    }}
+                />
+                
+                
+                {/* {singleMedicalRecord(navigation)}
                 {singleMedicalRecord(navigation)}
                 {singleMedicalRecord(navigation)}
-                {singleMedicalRecord(navigation)}
-                {singleMedicalRecord(navigation)}
+                {singleMedicalRecord(navigation)} */}
             </View>
         </SafeAreaView>
     );
+
+    function singleMedicalRecord(navigation, testCategory, nurse_name, testDate, testReading, test_record_id) {
+        return <View style={styles.medicalHistoryWrapper}>
+                    <View style={styles.medicalHistoryContainer}>
+                        <Text style={{fontWeight:'900', fontSize:16}}>{testCategory}</Text>
+                        <Text>{nurse_name}</Text>
+                        <Text>{testDate}</Text>
+                        <View style={styles.medicalHistoryTest}>
+                            <Text style={{color:'black',fontSize:14}}>Reading:</Text>
+                            <Text style={{fontSize:14,fontWeight:'bold',paddingLeft:5}}>{testReading}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.medicalHistoryButtons}>
+                            {/* <TouchableOpacity>
+                                <Image source={require("../img/expand.png")}></Image>
+                            </TouchableOpacity> */}
+                            
+                            <TouchableOpacity onPress={() => navigation.navigate('UpdateTestRecord', {patient_id: patient_id, test_id: test_record_id})}>
+                                <Image source={require("../img/edit.png")}></Image>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={onClickDeleteTestButton(test_record_id)}>
+                                <Image source={require("../img/delete.png")}></Image>
+                            </TouchableOpacity>
+                        </View>
+                    
+        </View>;
+    }
+
 }
 
 // Function for listing records
-function singleMedicalRecord(navigation) {
-    return <View style={styles.medicalHistoryWrapper}>
-                <View style={styles.medicalHistoryContainer}>
-                    <Text style={{fontWeight:'900', fontSize:16}}>Blood Oxygen Level</Text>
-                    <Text>Nurse David McRoe</Text>
-                    <Text>2023-10-25</Text>
-                    <View style={styles.medicalHistoryTest}>
-                        <Text style={{color:'black',fontSize:14}}>Reading:</Text>
-                        <Text style={{fontSize:14,fontWeight:'bold',paddingLeft:5}}>99</Text>
-                    </View>
-                </View>
-                <View style={styles.medicalHistoryButtons}>
-                    {/* <TouchableOpacity>
-                        <Image source={require("../img/expand.png")}></Image>
-                    </TouchableOpacity> */}
-                    <TouchableOpacity onPress={() => navigation.navigate('UpdateTestRecord')}>
-                        <Image source={require("../img/edit.png")}></Image>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image source={require("../img/delete.png")}></Image>
-                    </TouchableOpacity>
-                </View>
-    </View>;
-}
+
 
 // Style definitions
 const styles = StyleSheet.create({

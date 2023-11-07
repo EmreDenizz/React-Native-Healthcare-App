@@ -16,16 +16,41 @@ import {
 import { useState } from "react";
 import Dropdown from 'react-native-input-select';
 
-export default function AddTestRecord({ navigation }) {
+export default function AddTestRecord({ route, navigation }) {
   // State hooks
   const [nurse_name, setnurse_name] = React.useState("");
   const [date, setdate] = React.useState("");
   const [type, settype] = React.useState("");
   const [category, setcategory] = React.useState("");
-  const [reading, setreading] = React.useState("");
+  const [readings, setreadings] = React.useState("");
+
+  // Get patient id from navigation
+  var patient_id = route.params.patient_id;
 
   // Add button function
-  function onClickAddButton() {}
+  function onClickAddButton() {
+    // POST request to API for adding new patient
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nurse_name: nurse_name,
+        date: date,
+        type: "Test",
+        category: category,
+        readings: readings,
+        patient_id: patient_id,
+      })
+  };
+  fetch('http://192.168.17.11:3000/patients/'+patient_id+'/tests', options)
+      .then(
+              res => res.json(),
+              navigation.navigate('PatientDetails', {patientTestAdded: "Successful"})
+          )
+      .catch((error) => {
+          console.error(error);
+      })
+  }
 
   return (
     <View><Text><SafeAreaView style={styles.container}>
@@ -51,10 +76,6 @@ export default function AddTestRecord({ navigation }) {
           placeholder="Select a test type..."
           options={[
             { label: "Test", value: "Test" },
-            { label: "Second Opinion", value: "Second Opinion" },
-            { label: "Confirmatory", value: "Confirmatory" },
-            { label: "Learning", value: "Learning" },
-            { label: "Diagnosis", value: "Diagnosis" },
           ]}
           selectedValue={type}
           onValueChange={(value) => settype(value)}
@@ -68,7 +89,7 @@ export default function AddTestRecord({ navigation }) {
             { label: "Blood Pressure", value: "Blood Pressure" },
             { label: "Blood Oxygen Level", value: "Blood Oxygen Level" },
             { label: "Respiratory Rate", value: "Respiratory Rate" },
-            { label: "Heartbeat Rate", value: "Heartbeat Rate" },
+            { label: "Heart Beat Rate", value: "Heart Beat Rate" },
           ]}
           selectedValue={category}
           onValueChange={(value) => setcategory(value)}
@@ -77,8 +98,9 @@ export default function AddTestRecord({ navigation }) {
         />
         <TextInput
           style={styles.inputStyle}
-          value={reading}
-          onChangeText={(text) => setreading(text)}
+          value={readings}
+          keyboardType="numeric"
+          onChangeText={(text) => setreadings(Number(text))}
           placeholder={"Reading"}
         />
 
