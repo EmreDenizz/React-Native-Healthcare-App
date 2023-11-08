@@ -5,12 +5,13 @@
  */
 
 import * as React from "react";
-import { Text, View, Button, StyleSheet, TouchableOpacity, SafeAreaView, Image, FlatList } from "react-native";
+import { Text, View, Button, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, Image, FlatList } from "react-native";
 import { useState, useEffect } from 'react'
 
 export default function PatientDetails({ route, navigation }) {
     // State hooks
     const [patientName, setPatientName] = React.useState('');
+    const [patientStatus, setPatientStatus] = React.useState('');
     const [dateOfBirth, setDateOfBirth] = React.useState('');
     const [address, setAddress] = React.useState('');
     const [department, setDepartment] = React.useState('');
@@ -29,6 +30,7 @@ export default function PatientDetails({ route, navigation }) {
         then((response) => response.json()).
         then((json) => {
             setPatientName(json.first_name+" "+json.last_name)
+            setPatientStatus(json.status)
             setDateOfBirth(json.date_of_birth)
             setAddress(json.address)
             setDepartment(json.department)
@@ -50,7 +52,7 @@ export default function PatientDetails({ route, navigation }) {
         })
     }
 
-     function onClickDeleteTestButton(test_record_id){
+    function onClickDeleteTestButton(test_record_id){
         //  fetch(apiUrl+"tests/"+test_record_id, {method:'DELETE'})
         // .then(()=>getAllTestsForPatientFromAPI());
     }
@@ -72,9 +74,18 @@ export default function PatientDetails({ route, navigation }) {
             <View style={styles.wrapper}>
                 {/* Patient details*/}
                 <View style={styles.patientProfile}>
-                    <Image style={{marginTop: 20}} source={require("../img/user_icon.png")}></Image>
+                    <View style={{flex: 1, flexDirection: "column"}}>
+                        <Image style={{marginTop: 10}} source={require("../img/user_icon.png")}></Image>
+                        <TouchableOpacity
+                            style={[styles.buttonLeft, {marginLeft: -10, marginTop: 5}]}
+                            onPress = {onClickRefreshButton}>
+                            <Image source={require('../img/refresh.png')} style={[{width: 33}, {height: 33}]} />
+                        </TouchableOpacity>
+                    </View>
                     <View style={styles.patientDetails}>
                         <Text style={{fontWeight:'bold',fontSize:22}}>{patientName}</Text>
+                        {patientStatus == "Normal" && <Text style={{fontWeight:'bold', fontSize:14, color: "green"}}>{patientStatus}</Text>}
+                        {patientStatus == "Critical" && <Text style={{fontWeight:'bold', fontSize:14, color: "red"}}>{patientStatus}</Text>}
                         <Text style={{fontWeight:'normal',fontSize:14}}>Date of Birth: {dateOfBirth}</Text>
                         <Text style={{fontWeight:'normal',fontSize:14}}>Address: {address}</Text>
                         <Text style={{fontWeight:'normal',fontSize:14}}>Department: {department}</Text>
@@ -93,21 +104,12 @@ export default function PatientDetails({ route, navigation }) {
                 </View>
 
                 {/* List of Tests */}
-
                 <FlatList
                     data={patientTests.reverse()}
-                    // onRefresh={()=> getAllTestsForPatientFromAPI()}
-                    // refreshing:false
                     renderItem={(test)=>{
                         return singleMedicalRecord(navigation, test.item.category, test.item.nurse_name, test.item.date, test.item.readings, test.item._id)
                     }}
                 />
-                
-                
-                {/* {singleMedicalRecord(navigation)}
-                {singleMedicalRecord(navigation)}
-                {singleMedicalRecord(navigation)}
-                {singleMedicalRecord(navigation)} */}
             </View>
         </SafeAreaView>
     );
@@ -124,18 +126,13 @@ export default function PatientDetails({ route, navigation }) {
                         </View>
                     </View>
                     <View style={styles.medicalHistoryButtons}>
-                            {/* <TouchableOpacity>
-                                <Image source={require("../img/expand.png")}></Image>
-                            </TouchableOpacity> */}
-                            
-                            <TouchableOpacity onPress={() => navigation.navigate('UpdateTestRecord', {patient_id: patient_id, test_id: test_record_id})}>
-                                <Image source={require("../img/edit.png")}></Image>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={onClickDeleteTestButton(test_record_id)}>
-                                <Image source={require("../img/delete.png")}></Image>
-                            </TouchableOpacity>
-                        </View>
-                    
+                        <TouchableOpacity onPress={() => navigation.navigate('UpdateTestRecord', {patient_id: patient_id, test_id: test_record_id})}>
+                            <Image source={require("../img/edit.png")}></Image>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={onClickDeleteTestButton(test_record_id)}>
+                            <Image source={require("../img/delete.png")}></Image>
+                        </TouchableOpacity>
+                    </View>
         </View>;
     }
 

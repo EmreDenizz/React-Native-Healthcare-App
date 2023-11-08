@@ -60,13 +60,13 @@ export default function UpdatePatient({route, navigation}) {
         
     };
     fetch(apiUrl+"/patients/"+patient_id, options)
-            .then(
-                    res => res.json(),
-                    navigation.navigate('PatientDetails', {patientUpdated: "Successful"})
-                )
-            .catch((error) => {
-                console.error(error);
-            })
+        .then(
+            res => res.json(),
+            navigation.navigate('PatientDetails', {patientUpdated: "Successful"})
+        )
+        .catch((error) => {
+            console.error(error);
+        })
     };
 
     // Call while page loading to fetch patient details
