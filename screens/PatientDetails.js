@@ -16,10 +16,10 @@ export default function PatientDetails({ route, navigation }) {
     const [address, setAddress] = React.useState('');
     const [department, setDepartment] = React.useState('');
     const [doctor, setDoctor] = React.useState('');
-    const [patientTests, setPatientTests] = React.useState([])
+    const [patientTests, setPatientTests] = React.useState('')
 
     // API server URL
-    const apiUrl = "http://10.0.0.238:3000"
+    const apiUrl = "http://192.168.17.11:3000"
 
     // Get patient id from navigation
     var patient_id = route.params.patient_id;
@@ -45,7 +45,7 @@ export default function PatientDetails({ route, navigation }) {
         await fetch(apiUrl+"/patients/"+patient_id+"/tests")
         .then((response)=>response.json())
         .then((json)=>{
-            setPatientTests(json);
+            setPatientTests(json.reverse());
         })
         .catch((error) => {
             console.error(error);
@@ -62,15 +62,85 @@ export default function PatientDetails({ route, navigation }) {
         getAllPatientDetailsFromAPI();
         getAllTestsForPatientFromAPI();
     }, []);
+    
 
     // "Refresh" button actions
     function onClickRefreshButton() {
-        getAllPatientDetailsFromAPI();
+        //getAllPatientDetailsFromAPI();
         getAllTestsForPatientFromAPI();
+        listAllTestsForPatient();
     };
+
+    var patientTestsList = [];
+
+    function listAllTestsForPatient() {
+        if (patientTests.length == 0) {
+            patientTestsList.push(
+                <View style={{justifyContent:'center',alignItems:'center',}}>
+                    <Text style={styles.textStyle}>No tests yet</Text>
+                </View>
+            )
+        } else {
+            for (let i = 0; i < patientTests.length; i++) {
+                //const test = patientTests[i];
+                if (i == 0) {
+                    patientTestsList.push(
+                        //singleMedicalRecord(navigation, test.category, test.nurse_name, test.date, test.readings, test._id)
+                        <View style={styles.medicalHistoryWrapper}>
+                            <View style={styles.medicalHistoryContainer}>
+                                <Text style={{fontWeight:'900', fontSize:16}}>{patientTests[i].category}</Text>
+                                <Text>{patientTests[i].nurse_name}</Text>
+                                <Text>{patientTests[i].date}</Text>
+                                <View style={styles.medicalHistoryTest}>
+                                    <Text style={{color:'black',fontSize:14}}>Reading:</Text>
+                                    <Text style={{fontSize:14,fontWeight:'bold',paddingLeft:5}}>{patientTests[i].readings}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.medicalHistoryButtons}>
+                                <TouchableOpacity onPress={() => navigation.navigate('UpdateTestRecord', {patient_id: patientTests[i].patient_id, test_id: patientTests[i]._id})} style={{marginRight:20}}>
+                                    <Image source={require("../img/edit.png")}></Image>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={onClickDeleteTestButton(patientTests[i]._id)}>
+                                    <Image source={require("../img/delete.png")}></Image>
+                                </TouchableOpacity>
+                            </View>
+                </View>
+                    )
+                } else {
+                    patientTestsList.push(
+                        //singleMedicalRecord(navigation, test.category, test.nurse_name, test.date, test.readings, test._id)
+                        <View style={styles.medicalHistoryWrapper}>
+                            <View style={styles.medicalHistoryContainer}>
+                                <Text style={{fontWeight:'900', fontSize:16}}>{patientTests[i].category}</Text>
+                                <Text>{patientTests[i].nurse_name}</Text>
+                                <Text>{patientTests[i].date}</Text>
+                                <View style={styles.medicalHistoryTest}>
+                                    <Text style={{color:'black',fontSize:14}}>Reading:</Text>
+                                    <Text style={{fontSize:14,fontWeight:'bold',paddingLeft:5}}>{patientTests[i].readings}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.medicalHistoryButtons}>
+                                {/* <TouchableOpacity onPress={() => navigation.navigate('UpdateTestRecord', {patient_id: patientTests[i].patient_id, test_id: patientTests[i]._id})}>
+                                    <Image source={require("../img/edit.png")}></Image>
+                                </TouchableOpacity> */}
+                                <TouchableOpacity onPress={onClickDeleteTestButton(patientTests[i]._id)}>
+                                    <Image source={require("../img/delete.png")}></Image>
+                                </TouchableOpacity>
+                            </View>
+                </View>
+                    )
+                }
+                
+                
+            }
+        }
+        
+    }
+    listAllTestsForPatient();
 
     return (
         <SafeAreaView style={styles.container}>
+            <ScrollView>
             <View style={styles.wrapper}>
                 {/* Patient details*/}
                 <View style={styles.patientProfile}>
@@ -104,13 +174,17 @@ export default function PatientDetails({ route, navigation }) {
                 </View>
 
                 {/* List of Tests */}
-                <FlatList
+                {patientTestsList}
+                {/* <FlatList
                     data={patientTests.reverse()}
                     renderItem={(test)=>{
                         return singleMedicalRecord(navigation, test.item.category, test.item.nurse_name, test.item.date, test.item.readings, test.item._id)
                     }}
-                />
+                /> */}
             </View>
+            </ScrollView>
+            
+            
         </SafeAreaView>
     );
 
@@ -172,7 +246,7 @@ const styles = StyleSheet.create({
     medicalHistoryButtons:{
         width:'22%',
         flexDirection:'row',
-        justifyContent:'space-between',
+        justifyContent:'flex-end',
     },
     rectangleButtons:{
         flexDirection:'row',

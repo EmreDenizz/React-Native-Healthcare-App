@@ -25,7 +25,7 @@ export default function AddTestRecord({ route, navigation }) {
   const [readings, setReadings] = React.useState("");
 
   // API server URL
-  const apiUrl = "http://10.0.0.238:3000"
+  const apiUrl = "http://192.168.17.11:3000"
 
   // Get patient id from navigation
   var patient_id = route.params.patient_id;
@@ -101,7 +101,7 @@ export default function AddTestRecord({ route, navigation }) {
         />
         <TextInput
           style={styles.inputStyle}
-          value={readings}
+          value={readings.toString()}
           keyboardType="numeric"
           onChangeText={(text) => setReadings(Number(text))}
           placeholder={"Reading"}

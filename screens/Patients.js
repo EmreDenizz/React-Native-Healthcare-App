@@ -14,14 +14,14 @@ export default function Patients({route, navigation}) {
     const [patients, setPatients] = React.useState('');
 
     // API server URL
-    const apiUrl = "http://10.0.0.238:3000"
+    const apiUrl = "http://192.168.17.11:3000"
 
     // Get all patients from API
     const getAllPatientsFromAPI = async() => {
         await fetch(apiUrl+"/patients").
         then((response) => response.json()).
         then((json) => {
-            setPatients(json)
+            setPatients(json.reverse())
         })
         .catch((error) => {
             console.error(error);
