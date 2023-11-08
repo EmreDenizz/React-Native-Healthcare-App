@@ -22,7 +22,10 @@ export default function AddTestRecord({ route, navigation }) {
   const [date, setdate] = React.useState("");
   const [type, settype] = React.useState("");
   const [category, setcategory] = React.useState("");
-  const [readings, setreadings] = React.useState("");
+  const [readings, setReadings] = React.useState("");
+
+  // API server URL
+  const apiUrl = "http://10.0.0.238:3000"
 
   // Get patient id from navigation
   var patient_id = route.params.patient_id;
@@ -42,7 +45,7 @@ export default function AddTestRecord({ route, navigation }) {
         patient_id: patient_id,
       })
   };
-  fetch('http://192.168.17.11:3000/patients/'+patient_id+'/tests', options)
+  fetch(apiUrl+'/patients/'+patient_id+'/tests', options)
       .then(
               res => res.json(),
               navigation.navigate('PatientDetails', {patientTestAdded: "Successful"})
@@ -100,7 +103,7 @@ export default function AddTestRecord({ route, navigation }) {
           style={styles.inputStyle}
           value={readings}
           keyboardType="numeric"
-          onChangeText={(text) => setreadings(Number(text))}
+          onChangeText={(text) => setReadings(Number(text))}
           placeholder={"Reading"}
         />
 

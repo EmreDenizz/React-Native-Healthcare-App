@@ -18,6 +18,9 @@ export default function AddPatient({navigation}) {
     const [address, setAddress] = React.useState('');
     const [department, setDepartment] = React.useState('');
     const [doctor, setDoctor] = React.useState('');
+
+    // API server URL
+    const apiUrl = "http://10.0.0.238:3000"
   
     // Add button function
     function onClickAddButton() {
@@ -34,7 +37,7 @@ export default function AddPatient({navigation}) {
                 doctor: doctor
             })
         };
-        fetch('http://192.168.17.11:3000/patients', options)
+        fetch(apiUrl+'/patients', options)
             .then(
                     res => res.json(),
                     navigation.navigate('Patients', {patientAdded: "Successful"})

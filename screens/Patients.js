@@ -13,9 +13,12 @@ export default function Patients({route, navigation}) {
     const [search, setSearch] = React.useState('');
     const [patients, setPatients] = React.useState('');
 
+    // API server URL
+    const apiUrl = "http://10.0.0.238:3000"
+
     // Get all patients from API
     const getAllPatientsFromAPI = async() => {
-        await fetch("http://192.168.17.11:3000/patients").
+        await fetch(apiUrl+"/patients").
         then((response) => response.json()).
         then((json) => {
             setPatients(json)
@@ -27,7 +30,7 @@ export default function Patients({route, navigation}) {
 
     // Get cirtical patients from API
     const getCriticalPatientsFromAPI = async() => {
-        await fetch("http://192.168.17.11:3000/patients/critical").
+        await fetch(apiUrl+"/patients/critical").
         then((response) => response.json()).
         then((json) => {
             setPatients(json)
@@ -99,7 +102,7 @@ export default function Patients({route, navigation}) {
     // "Search" button actions
     function onClickSearchButton() {
         setPatients([]);
-        fetch("http://192.168.17.11:3000/patients/search/"+search).
+        fetch(apiUrl+"/patients/search/"+search).
             then((response) => response.json()).
             then((json) => {
                 if(json != "No patients found"){

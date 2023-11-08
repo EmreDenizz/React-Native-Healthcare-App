@@ -15,15 +15,17 @@ export default function PatientDetails({ route, navigation }) {
     const [address, setAddress] = React.useState('');
     const [department, setDepartment] = React.useState('');
     const [doctor, setDoctor] = React.useState('');
-
     const [patientTests, setPatientTests] = React.useState([])
+
+    // API server URL
+    const apiUrl = "http://10.0.0.238:3000"
 
     // Get patient id from navigation
     var patient_id = route.params.patient_id;
 
     // Get patient details from API
     const getAllPatientDetailsFromAPI = async() => {
-        await fetch("http://192.168.17.11:3000/patients/"+patient_id).
+        await fetch(apiUrl+"/patients/"+patient_id).
         then((response) => response.json()).
         then((json) => {
             setPatientName(json.first_name+" "+json.last_name)
@@ -38,7 +40,7 @@ export default function PatientDetails({ route, navigation }) {
     }
 
     const getAllTestsForPatientFromAPI = async()=>{
-        await fetch("http://192.168.17.11:3000/patients/"+patient_id+"/tests")
+        await fetch(apiUrl+"/patients/"+patient_id+"/tests")
         .then((response)=>response.json())
         .then((json)=>{
             setPatientTests(json);
@@ -49,9 +51,8 @@ export default function PatientDetails({ route, navigation }) {
     }
 
      function onClickDeleteTestButton(test_record_id){
-        //  fetch("http://192.168.17.11:3000/tests/"+test_record_id, {method:'DELETE'})
+        //  fetch(apiUrl+"tests/"+test_record_id, {method:'DELETE'})
         // .then(()=>getAllTestsForPatientFromAPI());
-    
     }
 
     // Call while page loading to fetch patient details
@@ -60,8 +61,7 @@ export default function PatientDetails({ route, navigation }) {
         getAllTestsForPatientFromAPI();
     }, []);
 
-    // "All" button actions
-    // TODO: add refresh button to fetch tests after adding and updating
+    // "Refresh" button actions
     function onClickRefreshButton() {
         getAllPatientDetailsFromAPI();
         getAllTestsForPatientFromAPI();
@@ -140,9 +140,6 @@ export default function PatientDetails({ route, navigation }) {
     }
 
 }
-
-// Function for listing records
-
 
 // Style definitions
 const styles = StyleSheet.create({

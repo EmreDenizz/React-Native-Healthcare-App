@@ -19,12 +19,15 @@ export default function UpdatePatient({route, navigation}) {
     const [doctor, setDoctor] = React.useState('');
     const [status, setStatus] = React.useState('');
 
+    // API server URL
+    const apiUrl = "http://10.0.0.238:3000"
+
     // Get patient id from navigation
     var patient_id = route.params.patient_id;
 
     // Get patient details from API
     const getAllPatientDetailsFromAPI = async() => {
-        await fetch("http://192.168.17.11:3000/patients/"+patient_id).
+        await fetch(apiUrl+"/patients/"+patient_id).
         then((response) => response.json()).
         then((json) => {
             setFirstName(json.first_name)
@@ -56,7 +59,7 @@ export default function UpdatePatient({route, navigation}) {
         })
         
     };
-    fetch('http://192.168.17.11:3000/patients/'+patient_id, options)
+    fetch(apiUrl+"/patients/"+patient_id, options)
             .then(
                     res => res.json(),
                     navigation.navigate('PatientDetails', {patientUpdated: "Successful"})

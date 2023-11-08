@@ -17,12 +17,15 @@ export default function UpdateTestRecord({route, navigation}) {
   const [category, setcategory] = React.useState("");
   const [readings, setreadings] = React.useState("");
 
+  // API server URL
+  const apiUrl = "http://10.0.0.238:3000"
+
   // Get patient id from navigation
   var patient_id = route.params.patient_id;
   var test_id = route.params.test_id;
 
   const getAllTestDetailsFromAPI = async() => {
-    await fetch("http://192.168.17.11:3000/tests/"+test_id).
+    await fetch(apiUrl+"/tests/"+test_id).
     then((response) => response.json()).
     then((json) => {
         setnurse_name(json.nurse_name)
@@ -52,7 +55,7 @@ export default function UpdateTestRecord({route, navigation}) {
       })
       
   };
-  fetch('http://192.168.17.11:3000/patients/'+patient_id+'/tests/'+test_id, options)
+  fetch(apiUrl+'/patients/'+patient_id+'/tests/'+test_id, options)
           .then(
                   res => res.json(),
                   navigation.navigate('PatientDetails', {testUpdated: "Successful"})
