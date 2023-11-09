@@ -1,7 +1,9 @@
 /**
- * @file PatientDetails.js -> React Native Healthcare App
- * @author Emre Deniz
- * @author Muindo Gituku
+ * @file PatientDetails.js
+ * @author Emre Deniz (301371047)
+ * @author Muindo Gituku (301372521)
+ * @date Nov 11, 2023
+ * @description React Native Project
  */
 
 import * as React from "react";
@@ -19,7 +21,7 @@ export default function PatientDetails({ route, navigation }) {
     const [patientTests, setPatientTests] = React.useState('')
 
     // API server URL
-    const apiUrl = "http://192.168.17.11:3000"
+    const apiUrl = "http://10.0.0.238:3000"
 
     // Get patient id from navigation
     var patient_id = route.params.patient_id;
@@ -41,6 +43,7 @@ export default function PatientDetails({ route, navigation }) {
         })
     }
 
+    // Get tests belongs to the patient from API
     const getAllTestsForPatientFromAPI = async()=>{
         await fetch(apiUrl+"/patients/"+patient_id+"/tests")
         .then((response)=>response.json())
@@ -52,41 +55,40 @@ export default function PatientDetails({ route, navigation }) {
         })
     }
 
-    function onClickDeleteTestButton(test_record_id){
-        //  fetch(apiUrl+"tests/"+test_record_id, {method:'DELETE'})
-        // .then(()=>getAllTestsForPatientFromAPI());
-    }
-
     // Call while page loading to fetch patient details
     useEffect(() => {
         getAllPatientDetailsFromAPI();
         getAllTestsForPatientFromAPI();
     }, []);
-    
 
     // "Refresh" button actions
     function onClickRefreshButton() {
-        //getAllPatientDetailsFromAPI();
+        getAllPatientDetailsFromAPI();
         getAllTestsForPatientFromAPI();
         listAllTestsForPatient();
     };
 
-    var patientTestsList = [];
+    // "Delete" button actions
+    function onClickDeleteTestButton(test_record_id){
 
+    }
+
+    // Define list of tests that belongs to the patient
+    var patientTestsList = [];
     function listAllTestsForPatient() {
         if (patientTests.length == 0) {
             patientTestsList.push(
-                <View style={{justifyContent:'center',alignItems:'center',}}>
+                <View key = {0} style={{justifyContent:'center',alignItems:'center',}}>
                     <Text style={styles.textStyle}>No tests yet</Text>
                 </View>
             )
-        } else {
+        }
+        else {
             for (let i = 0; i < patientTests.length; i++) {
-                //const test = patientTests[i];
+                // Allow user to update the latest test
                 if (i == 0) {
                     patientTestsList.push(
-                        //singleMedicalRecord(navigation, test.category, test.nurse_name, test.date, test.readings, test._id)
-                        <View style={styles.medicalHistoryWrapper}>
+                        <View key = {i} style={styles.medicalHistoryWrapper}>
                             <View style={styles.medicalHistoryContainer}>
                                 <Text style={{fontWeight:'900', fontSize:16}}>{patientTests[i].category}</Text>
                                 <Text>{patientTests[i].nurse_name}</Text>
@@ -104,12 +106,12 @@ export default function PatientDetails({ route, navigation }) {
                                     <Image source={require("../img/delete.png")}></Image>
                                 </TouchableOpacity>
                             </View>
-                </View>
+                        </View>
                     )
-                } else {
+                }
+                else {
                     patientTestsList.push(
-                        //singleMedicalRecord(navigation, test.category, test.nurse_name, test.date, test.readings, test._id)
-                        <View style={styles.medicalHistoryWrapper}>
+                        <View key = {i} style={styles.medicalHistoryWrapper}>
                             <View style={styles.medicalHistoryContainer}>
                                 <Text style={{fontWeight:'900', fontSize:16}}>{patientTests[i].category}</Text>
                                 <Text>{patientTests[i].nurse_name}</Text>
@@ -120,22 +122,18 @@ export default function PatientDetails({ route, navigation }) {
                                 </View>
                             </View>
                             <View style={styles.medicalHistoryButtons}>
-                                {/* <TouchableOpacity onPress={() => navigation.navigate('UpdateTestRecord', {patient_id: patientTests[i].patient_id, test_id: patientTests[i]._id})}>
-                                    <Image source={require("../img/edit.png")}></Image>
-                                </TouchableOpacity> */}
                                 <TouchableOpacity onPress={onClickDeleteTestButton(patientTests[i]._id)}>
                                     <Image source={require("../img/delete.png")}></Image>
                                 </TouchableOpacity>
                             </View>
-                </View>
+                        </View>
                     )
                 }
-                
-                
             }
         }
-        
     }
+
+    // Call while page loading to list tests
     listAllTestsForPatient();
 
     return (
@@ -152,7 +150,7 @@ export default function PatientDetails({ route, navigation }) {
                             <Image source={require('../img/refresh.png')} style={[{width: 33}, {height: 33}]} />
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.patientDetails}>
+                    <View style={{paddingRight: 30}}>
                         <Text style={{fontWeight:'bold',fontSize:22}}>{patientName}</Text>
                         {patientStatus == "Normal" && <Text style={{fontWeight:'bold', fontSize:14, color: "green"}}>{patientStatus}</Text>}
                         {patientStatus == "Critical" && <Text style={{fontWeight:'bold', fontSize:14, color: "red"}}>{patientStatus}</Text>}
@@ -175,41 +173,11 @@ export default function PatientDetails({ route, navigation }) {
 
                 {/* List of Tests */}
                 {patientTestsList}
-                {/* <FlatList
-                    data={patientTests.reverse()}
-                    renderItem={(test)=>{
-                        return singleMedicalRecord(navigation, test.item.category, test.item.nurse_name, test.item.date, test.item.readings, test.item._id)
-                    }}
-                /> */}
             </View>
             </ScrollView>
             
-            
         </SafeAreaView>
     );
-
-    function singleMedicalRecord(navigation, testCategory, nurse_name, testDate, testReading, test_record_id) {
-        return <View style={styles.medicalHistoryWrapper}>
-                    <View style={styles.medicalHistoryContainer}>
-                        <Text style={{fontWeight:'900', fontSize:16}}>{testCategory}</Text>
-                        <Text>{nurse_name}</Text>
-                        <Text>{testDate}</Text>
-                        <View style={styles.medicalHistoryTest}>
-                            <Text style={{color:'black',fontSize:14}}>Reading:</Text>
-                            <Text style={{fontSize:14,fontWeight:'bold',paddingLeft:5}}>{testReading}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.medicalHistoryButtons}>
-                        <TouchableOpacity onPress={() => navigation.navigate('UpdateTestRecord', {patient_id: patient_id, test_id: test_record_id})}>
-                            <Image source={require("../img/edit.png")}></Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={onClickDeleteTestButton(test_record_id)}>
-                            <Image source={require("../img/delete.png")}></Image>
-                        </TouchableOpacity>
-                    </View>
-        </View>;
-    }
-
 }
 
 // Style definitions
@@ -225,7 +193,7 @@ const styles = StyleSheet.create({
     },
     patientProfile:{
         flexDirection:"row",
-        justifyContent:'left',
+        justifyContent: "flex-start",
         alignItems:'flex-start',
         marginBottom:20,
     },
@@ -273,5 +241,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderRadius: 0,
         marginTop: 30
-    },
+    }
 });

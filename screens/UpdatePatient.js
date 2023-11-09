@@ -1,7 +1,9 @@
 /**
- * @file UpdatePatient.js -> React Native Healthcare App
- * @author Emre Deniz
- * @author Muindo Gituku
+ * @file UpdatePatient.js
+ * @author Emre Deniz (301371047)
+ * @author Muindo Gituku (301372521)
+ * @date Nov 11, 2023
+ * @description React Native Project
  */
 
 import * as React from 'react';
@@ -20,7 +22,7 @@ export default function UpdatePatient({route, navigation}) {
     const [status, setStatus] = React.useState('');
 
     // API server URL
-    const apiUrl = "http://192.168.17.11:3000"
+    const apiUrl = "http://10.0.0.238:3000"
 
     // Get patient id from navigation
     var patient_id = route.params.patient_id;
@@ -46,27 +48,26 @@ export default function UpdatePatient({route, navigation}) {
     // Update button function
     function onClickUpdateButton() {
         // PUT request to API for updating patient
-    const options = {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            first_name: firstName,
-            last_name: lastName,
-            date_of_birth: dateOfBirth,
-            address: address,
-            department: department,
-            doctor: doctor
-        })
-        
-    };
-    fetch(apiUrl+"/patients/"+patient_id, options)
-        .then(
-            res => res.json(),
-            navigation.navigate('PatientDetails', {patientUpdated: "Successful"})
-        )
-        .catch((error) => {
-            console.error(error);
-        })
+        const options = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                first_name: firstName,
+                last_name: lastName,
+                date_of_birth: dateOfBirth,
+                address: address,
+                department: department,
+                doctor: doctor
+            })
+        };
+        fetch(apiUrl+"/patients/"+patient_id, options)
+            .then(
+                res => res.json(),
+                navigation.navigate('PatientDetails', {patient_id: patient_id})
+            )
+            .catch((error) => {
+                console.error(error);
+            })
     };
 
     // Call while page loading to fetch patient details

@@ -1,7 +1,9 @@
 /**
- * @file UpdateTestRecord.js -> React Native Healthcare App
- * @author Emre Deniz
- * @author Muindo Gituku
+ * @file UpdateTestRecord.js
+ * @author Emre Deniz (301371047)
+ * @author Muindo Gituku (301372521)
+ * @date Nov 11, 2023
+ * @description React Native Project
  */
 
 import * as React from "react";
@@ -10,34 +12,32 @@ import { useState, useEffect } from "react";
 import Dropdown from 'react-native-input-select';
 
 export default function UpdateTestRecord({route, navigation}) {
-// State hooks
-  const [nurse_name, setnurse_name] = React.useState("");
-  const [date, setdate] = React.useState("");
-  const [type, settype] = React.useState("");
-  const [category, setcategory] = React.useState("");
-  const [readings, setreadings] = React.useState("");
+    // State hooks
+    const [nurse_name, setnurse_name] = React.useState("");
+    const [date, setdate] = React.useState("");
+    const [category, setcategory] = React.useState("");
+    const [readings, setreadings] = React.useState("");
 
-  // API server URL
-  const apiUrl = "http://192.168.17.11:3000"
+    // API server URL
+    const apiUrl = "http://10.0.0.238:3000"
 
-  // Get patient id from navigation
-  var patient_id = route.params.patient_id;
-  var test_id = route.params.test_id;
+    // Get patient id from navigation
+    var patient_id = route.params.patient_id;
+    var test_id = route.params.test_id;
 
-  const getAllTestDetailsFromAPI = async() => {
-    await fetch(apiUrl+"/tests/"+test_id).
-    then((response) => response.json()).
-    then((json) => {
-        setnurse_name(json.nurse_name)
-        setdate(json.date)
-        settype(json.type)
-        setcategory(json.category)
-        setreadings(json.readings)
-    })
-    .catch((error) => {
-        console.error(error);
-    })
-}
+    const getAllTestDetailsFromAPI = async() => {
+        await fetch(apiUrl+"/tests/"+test_id).
+        then((response) => response.json()).
+        then((json) => {
+            setnurse_name(json.nurse_name)
+            setdate(json.date)
+            setcategory(json.category)
+            setreadings(json.readings)
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
 
   // Update button function
   function onClickUpdateButton() {
@@ -49,26 +49,26 @@ export default function UpdateTestRecord({route, navigation}) {
         patient_id: patient_id,
         date: date,
         nurse_name: nurse_name,
-        type: type,
+        type: "Test",
         category: category,
         readings: readings,
       })
       
   };
   fetch(apiUrl+'/patients/'+patient_id+'/tests/'+test_id, options)
-          .then(
-                  res => res.json(),
-                  navigation.navigate('PatientDetails', {testUpdated: "Successful"})
-              )
-          .catch((error) => {
-              console.error(error);
-          })
+    .then(
+            res => res.json(),
+            navigation.navigate('PatientDetails', {patient_id: patient_id})
+    )
+    .catch((error) => {
+        console.error(error);
+    })
   }
 
-  // Call while page loading to fetch patient details
-  useEffect(() => {
-    getAllTestDetailsFromAPI();
-}, []);
+    // Call while page loading to fetch patient details
+    useEffect(() => {
+        getAllTestDetailsFromAPI();
+    }, []);
 
     return (
         <View><Text><SafeAreaView style={styles.container}>
@@ -89,17 +89,6 @@ export default function UpdateTestRecord({route, navigation}) {
               placeholder={"Test Date (DD/MM/YYYY)"}
             />
             <Text> </Text>
-            <Text>Type:</Text>
-            <Dropdown
-              placeholder="Select a test type..."
-              options={[
-                { label: "Test", value: "Test" },
-              ]}
-              selectedValue={type}
-              onValueChange={(value) => settype(value)}
-              primaryColor={"green"}
-              isMultiple={false}
-            />
             <Text>Category:</Text>
             <Dropdown
               placeholder="Select a test category..."

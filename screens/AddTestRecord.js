@@ -1,7 +1,9 @@
 /**
- * @file AddTestRecord.js -> React Native Healthcare App
- * @author Emre Deniz
- * @author Muindo Gituku
+ * @file AddTestRecord.js
+ * @author Emre Deniz (301371047)
+ * @author Muindo Gituku (301372521)
+ * @date Nov 11, 2023
+ * @description React Native Project
  */
 
 import * as React from "react";
@@ -25,7 +27,7 @@ export default function AddTestRecord({ route, navigation }) {
   const [readings, setReadings] = React.useState("");
 
   // API server URL
-  const apiUrl = "http://192.168.17.11:3000"
+  const apiUrl = "http://10.0.0.238:3000"
 
   // Get patient id from navigation
   var patient_id = route.params.patient_id;
@@ -48,7 +50,7 @@ export default function AddTestRecord({ route, navigation }) {
   fetch(apiUrl+'/patients/'+patient_id+'/tests', options)
       .then(
               res => res.json(),
-              navigation.navigate('PatientDetails', {patientTestAdded: "Successful"})
+              navigation.navigate('PatientDetails', {patient_id: patient_id})
           )
       .catch((error) => {
           console.error(error);
@@ -74,17 +76,6 @@ export default function AddTestRecord({ route, navigation }) {
           placeholder={"Test Date (DD/MM/YYYY)"}
         />
         <Text> </Text>
-        <Text>Type:</Text>
-        <Dropdown
-          placeholder="Select a test type..."
-          options={[
-            { label: "Test", value: "Test" },
-          ]}
-          selectedValue={type}
-          onValueChange={(value) => settype(value)}
-          primaryColor={"green"}
-          isMultiple={false}
-        />
         <Text>Category:</Text>
         <Dropdown
           placeholder="Select a test category..."

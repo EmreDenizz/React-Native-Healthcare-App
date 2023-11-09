@@ -1,7 +1,9 @@
 /**
- * @file Patients.js -> React Native Healthcare App
- * @author Emre Deniz
- * @author Muindo Gituku
+ * @file Patients.js
+ * @author Emre Deniz (301371047)
+ * @author Muindo Gituku (301372521)
+ * @date Nov 11, 2023
+ * @description React Native Project
  */
 
 import * as React from 'react';
@@ -14,7 +16,7 @@ export default function Patients({route, navigation}) {
     const [patients, setPatients] = React.useState('');
 
     // API server URL
-    const apiUrl = "http://192.168.17.11:3000"
+    const apiUrl = "http://10.0.0.238:3000"
 
     // Get all patients from API
     const getAllPatientsFromAPI = async() => {
