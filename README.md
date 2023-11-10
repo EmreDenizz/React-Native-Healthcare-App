@@ -8,12 +8,18 @@ npx expo start
 ```
 
 ### FEATURES:
-1. Listing all patients
-2. Adding new patient
-3. Viewing patient details
-4. Updating patient information
-5. Adding new medical test record to a patient
-6. Updating medical test record
+1. Use https://github.com/EmreDenizz/NodeJS-Healthcare-API-Server API server
+2. List all patients
+3. Search patients by name
+4. Filter critical patients 
+5. Add a new patient
+6. View patient details
+7. Update patient information
+8. Delete a patient
+9. List all medical tests belong to a patient
+10. Add new medical test record to a patient
+11. Update medical test record
+12. Delete a medical test
 
 ### SCREENSHOTS:
 <kbd><img src="screenshots/ss_1.png" height="500"/></kbd>    <kbd><img src="screenshots/ss_2.png" height="500"/></kbd>    <kbd><img src="screenshots/ss_3.png" height="500"/></kbd>
