@@ -16,7 +16,7 @@ export default function Patients({route, navigation}) {
     const [patients, setPatients] = React.useState('');
 
     // API server URL
-    const apiUrl = "http://10.0.0.238:3000"
+    const apiUrl = "http://192.168.17.3:3000"
 
     // Get all patients from API
     const getAllPatientsFromAPI = async() => {

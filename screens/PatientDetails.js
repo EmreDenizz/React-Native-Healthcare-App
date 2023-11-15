@@ -21,7 +21,7 @@ export default function PatientDetails({ route, navigation }) {
     const [patientTests, setPatientTests] = React.useState('')
 
     // API server URL
-    const apiUrl = "http://10.0.0.238:3000"
+    const apiUrl = "http://192.168.17.3:3000"
 
     // Get patient id from navigation
     var patient_id = route.params.patient_id;
@@ -70,7 +70,26 @@ export default function PatientDetails({ route, navigation }) {
 
     // "Delete" button actions
     function onClickDeleteTestButton(test_record_id){
+        fetch(apiUrl+'/tests/'+test_record_id, {method:"DELETE"})
+        .then(
+                res => res.json(),
+                // navigation.navigate('Patients')
+            )
+        .catch((error) => {
+            console.error(error);
+        })
+    }
 
+    //Delete patient records action
+    function onClickDeletePatientButton(){
+        fetch(apiUrl+'/patients/'+patient_id, {method:"DELETE"})
+        .then(
+                res => res.json(),
+                navigation.navigate('Patients')
+            )
+        .catch((error) => {
+            console.error(error);
+        })
     }
 
     // Define list of tests that belongs to the patient
@@ -91,19 +110,16 @@ export default function PatientDetails({ route, navigation }) {
                         <View key = {i} style={styles.medicalHistoryWrapper}>
                             <View style={styles.medicalHistoryContainer}>
                                 <Text style={{fontWeight:'900', fontSize:16}}>{patientTests[i].category}</Text>
-                                <Text>{patientTests[i].nurse_name}</Text>
-                                <Text>{patientTests[i].date}</Text>
+                                <Text>Nurse: {patientTests[i].nurse_name}</Text>
+                                <Text>Date Tested: {patientTests[i].date}</Text>
                                 <View style={styles.medicalHistoryTest}>
                                     <Text style={{color:'black',fontSize:14}}>Reading:</Text>
                                     <Text style={{fontSize:14,fontWeight:'bold',paddingLeft:5}}>{patientTests[i].readings}</Text>
                                 </View>
                             </View>
                             <View style={styles.medicalHistoryButtons}>
-                                <TouchableOpacity onPress={() => navigation.navigate('UpdateTestRecord', {patient_id: patientTests[i].patient_id, test_id: patientTests[i]._id})} style={{marginRight:20}}>
+                                <TouchableOpacity onPress={() => navigation.navigate('UpdateTestRecord', {patient_id: patientTests[i].patient_id, test_id: patientTests[i]._id})}>
                                     <Image source={require("../img/edit.png")}></Image>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={onClickDeleteTestButton(patientTests[i]._id)}>
-                                    <Image source={require("../img/delete.png")}></Image>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -114,15 +130,15 @@ export default function PatientDetails({ route, navigation }) {
                         <View key = {i} style={styles.medicalHistoryWrapper}>
                             <View style={styles.medicalHistoryContainer}>
                                 <Text style={{fontWeight:'900', fontSize:16}}>{patientTests[i].category}</Text>
-                                <Text>{patientTests[i].nurse_name}</Text>
-                                <Text>{patientTests[i].date}</Text>
+                                <Text>Nurse: {patientTests[i].nurse_name}</Text>
+                                <Text>Date Tested: {patientTests[i].date}</Text>
                                 <View style={styles.medicalHistoryTest}>
                                     <Text style={{color:'black',fontSize:14}}>Reading:</Text>
                                     <Text style={{fontSize:14,fontWeight:'bold',paddingLeft:5}}>{patientTests[i].readings}</Text>
                                 </View>
                             </View>
                             <View style={styles.medicalHistoryButtons}>
-                                <TouchableOpacity onPress={onClickDeleteTestButton(patientTests[i]._id)}>
+                                <TouchableOpacity onPress={() => onClickDeleteTestButton(patientTests[i]._id)}>
                                     <Image source={require("../img/delete.png")}></Image>
                                 </TouchableOpacity>
                             </View>
@@ -150,7 +166,7 @@ export default function PatientDetails({ route, navigation }) {
                             <Image source={require('../img/refresh.png')} style={[{width: 33}, {height: 33}]} />
                         </TouchableOpacity>
                     </View>
-                    <View style={{paddingRight: 30}}>
+                    <View style={{paddingLeft: 20}}>
                         <Text style={{fontWeight:'bold',fontSize:22}}>{patientName}</Text>
                         {patientStatus == "Normal" && <Text style={{fontWeight:'bold', fontSize:14, color: "green"}}>{patientStatus}</Text>}
                         {patientStatus == "Critical" && <Text style={{fontWeight:'bold', fontSize:14, color: "red"}}>{patientStatus}</Text>}
@@ -173,6 +189,13 @@ export default function PatientDetails({ route, navigation }) {
 
                 {/* List of Tests */}
                 {patientTestsList}
+
+                <View style={styles.deleteButtons}>
+                    <TouchableOpacity onPress = {onClickDeletePatientButton} style={styles.deleteButton}>
+                        <Text style={{fontWeight:'bold',fontSize:14,color:"#fff"}}>Delete Patient Records</Text>
+                    </TouchableOpacity>
+                </View>
+
             </View>
             </ScrollView>
             
@@ -241,5 +264,15 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderRadius: 0,
         marginTop: 30
+    },
+    deleteButtons:{
+        width:"100%",
+    },
+    deleteButton:{
+        alignItems:"center",
+        backgroundColor: "#DD0000",
+        borderColor:"#DD0000",
+        borderWidth:2,
+        padding:13,
     }
 });

@@ -19,7 +19,7 @@ export default function UpdateTestRecord({route, navigation}) {
     const [readings, setreadings] = React.useState("");
 
     // API server URL
-    const apiUrl = "http://10.0.0.238:3000"
+    const apiUrl = "http://192.168.17.3:3000"
 
     // Get patient id from navigation
     var patient_id = route.params.patient_id;
