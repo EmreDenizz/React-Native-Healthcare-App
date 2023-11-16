@@ -1,5 +1,5 @@
-# React-Native-Healthcare-App
-Healthcare application in React Native
+ # React-Native-Healthcare-App
+Healthcare application in React Native, also using third-party REST API
 
 ### HOW TO RUN:
 ```console
@@ -22,7 +22,7 @@ npx expo start
 12. Delete a medical test
 
 ### SCREENSHOTS:
-<kbd><img src="screenshots/ss_1.png" height="500"/></kbd>    <kbd><img src="screenshots/ss_2.png" height="500"/></kbd>    <kbd><img src="screenshots/ss_3.png" height="500"/></kbd>
+<kbd><img src="screenshots/ss_1.png" height="500"/></kbd>    <kbd><img src="screenshots/ss_3.png" height="500"/></kbd>    <kbd><img src="screenshots/ss_2.png" height="500"/></kbd>
 
 
 <kbd><img src="screenshots/ss_4.png" height="500"/></kbd>    <kbd><img src="screenshots/ss_5.png" height="500"/></kbd>    <kbd><img src="screenshots/ss_6.png" height="500"/></kbd> 
