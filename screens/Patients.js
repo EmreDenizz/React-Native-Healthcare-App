@@ -2,7 +2,7 @@
  * @file Patients.js
  * @author Emre Deniz (301371047)
  * @author Muindo Gituku (301372521)
- * @date Nov 11, 2023
+ * @date Nov 27, 2023
  * @description React Native Project
  */
 
@@ -16,7 +16,7 @@ export default function Patients({route, navigation}) {
     const [patients, setPatients] = React.useState('');
 
     // API server URL
-    const apiUrl = "http://192.168.17.3:3000"
+    const apiUrl = "http://10.0.0.237:3000"
 
     // Get all patients from API
     const getAllPatientsFromAPI = async() => {

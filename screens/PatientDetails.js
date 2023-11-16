@@ -2,7 +2,7 @@
  * @file PatientDetails.js
  * @author Emre Deniz (301371047)
  * @author Muindo Gituku (301372521)
- * @date Nov 11, 2023
+ * @date Nov 27, 2023
  * @description React Native Project
  */
 
@@ -19,9 +19,10 @@ export default function PatientDetails({ route, navigation }) {
     const [department, setDepartment] = React.useState('');
     const [doctor, setDoctor] = React.useState('');
     const [patientTests, setPatientTests] = React.useState('')
+    const [infoMsgSize, setInfoMsgSize] = React.useState(0)
 
     // API server URL
-    const apiUrl = "http://192.168.17.3:3000"
+    const apiUrl = "http://10.0.0.237:3000"
 
     // Get patient id from navigation
     var patient_id = route.params.patient_id;
@@ -66,21 +67,22 @@ export default function PatientDetails({ route, navigation }) {
         getAllPatientDetailsFromAPI();
         getAllTestsForPatientFromAPI();
         listAllTestsForPatient();
+        setInfoMsgSize(0)
     };
 
-    // "Delete" button actions
+    // Delete patient
     function onClickDeleteTestButton(test_record_id){
         fetch(apiUrl+'/tests/'+test_record_id, {method:"DELETE"})
         .then(
                 res => res.json(),
-                // navigation.navigate('Patients')
+                setInfoMsgSize(16)
             )
         .catch((error) => {
             console.error(error);
         })
     }
 
-    //Delete patient records action
+    // Delete patient records action
     function onClickDeletePatientButton(){
         fetch(apiUrl+'/patients/'+patient_id, {method:"DELETE"})
         .then(
@@ -182,19 +184,31 @@ export default function PatientDetails({ route, navigation }) {
                     <TouchableOpacity onPress={() => navigation.navigate('UpdatePatient', {patient_id: patient_id})} style={styles.updateButton}>
                         <Text style={{fontWeight:'bold',fontSize:14,color:"#fff"}}>Update Patient</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.navigate('AddTestRecord', {patient_id: patient_id})} style={styles.addButton}>
-                        <Text style={{fontWeight:'bold',fontSize:14,}}>Add Test Record</Text>   
+                    {/* <TouchableOpacity onPress={() => navigation.navigate('AddTestRecord', {patient_id: patient_id})} style={styles.addButton}>
+                        <Text style={{fontWeight:'bold',fontSize:14,}}>Add Test</Text>   
+                    </TouchableOpacity> */}
+                    <TouchableOpacity onPress = {onClickDeletePatientButton} style={styles.deleteButton}>
+                        <Text style={{fontWeight:'bold',fontSize:14,color:"#fff"}}>Delete Patient</Text>
                     </TouchableOpacity>
                 </View>
+                
+                {/* Test title and Add Test Button */}
+                <View style={{flexDirection:'row', marginBottom: 2}}>
+                    <Text style={{fontWeight: "bold", fontSize: 18, marginTop: 0}}>Test Records</Text>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('AddTestRecord', {patient_id: patient_id})}
+                        style={{left: 213}}>
+                        <Image
+                            source={require('../img/add.png')}
+                            style={[{width: 40}, {height: 40}, {marginTop: -5}]} />
+                    </TouchableOpacity>
+                </View>
+
+                {/* Info message after test deletion */}
+                <Text style={{fontWeight: "bold", fontSize: infoMsgSize, color:"#3B80C8", marginBottom: 5}}>Deleted. Please refresh the screen</Text>
 
                 {/* List of Tests */}
                 {patientTestsList}
-
-                <View style={styles.deleteButtons}>
-                    <TouchableOpacity onPress = {onClickDeletePatientButton} style={styles.deleteButton}>
-                        <Text style={{fontWeight:'bold',fontSize:14,color:"#fff"}}>Delete Patient Records</Text>
-                    </TouchableOpacity>
-                </View>
 
             </View>
             </ScrollView>
@@ -242,7 +256,7 @@ const styles = StyleSheet.create({
     rectangleButtons:{
         flexDirection:'row',
         justifyContent:'space-between',
-        marginBottom:25,
+        marginBottom:20,
     },
     updateButton:{
         backgroundColor: "#3B80C8",
