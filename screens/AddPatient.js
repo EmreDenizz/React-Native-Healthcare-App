@@ -22,7 +22,7 @@ export default function AddPatient({navigation}) {
     const [doctor, setDoctor] = React.useState('');
 
     // API server URL
-    const apiUrl = "http://192.168.17.3:3000"
+    const apiUrl = "https://nodejs-healthcare-api-server.onrender.com"
   
     // Add button function
     function onClickAddButton() {

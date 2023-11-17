@@ -1,7 +1,9 @@
 /**
- * @file App.js -> React Native Healthcare App
- * @author Emre Deniz
- * @author Muindo Gituku
+ * @file App.js
+ * @author Emre Deniz (301371047)
+ * @author Muindo Gituku (301372521)
+ * @date Nov 27, 2023
+ * @description React Native Project
  */
 
 import * as React from 'react';

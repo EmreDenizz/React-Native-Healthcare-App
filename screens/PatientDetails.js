@@ -18,11 +18,11 @@ export default function PatientDetails({ route, navigation }) {
     const [address, setAddress] = React.useState('');
     const [department, setDepartment] = React.useState('');
     const [doctor, setDoctor] = React.useState('');
-    const [patientTests, setPatientTests] = React.useState('')
-    const [infoMsgSize, setInfoMsgSize] = React.useState(0)
+    const [patientTests, setPatientTests] = React.useState('');
+    const [infoMsgSize, setInfoMsgSize] = React.useState(0);
 
     // API server URL
-    const apiUrl = "http://10.0.0.237:3000"
+    const apiUrl = "https://nodejs-healthcare-api-server.onrender.com"
 
     // Get patient id from navigation
     var patient_id = route.params.patient_id;
@@ -67,7 +67,7 @@ export default function PatientDetails({ route, navigation }) {
         getAllPatientDetailsFromAPI();
         getAllTestsForPatientFromAPI();
         listAllTestsForPatient();
-        setInfoMsgSize(0)
+        setInfoMsgSize(0);
     };
 
     // Delete patient
@@ -156,8 +156,7 @@ export default function PatientDetails({ route, navigation }) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView>
-            <View style={styles.wrapper}>
+            <ScrollView style = {styles.wrapper}>
                 {/* Patient details*/}
                 <View style={styles.patientProfile}>
                     <View style={{flex: 1, flexDirection: "column"}}>
@@ -197,7 +196,7 @@ export default function PatientDetails({ route, navigation }) {
                     <Text style={{fontWeight: "bold", fontSize: 18, marginTop: 0}}>Test Records</Text>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('AddTestRecord', {patient_id: patient_id})}
-                        style={{left: 213}}>
+                        style={{left: 180}}>
                         <Image
                             source={require('../img/add.png')}
                             style={[{width: 40}, {height: 40}, {marginTop: -5}]} />
@@ -210,7 +209,6 @@ export default function PatientDetails({ route, navigation }) {
                 {/* List of Tests */}
                 {patientTestsList}
 
-            </View>
             </ScrollView>
             
         </SafeAreaView>
@@ -220,19 +218,21 @@ export default function PatientDetails({ route, navigation }) {
 // Style definitions
 const styles = StyleSheet.create({
     container: {
-        alignItems: "left"
+        alignItems: "left",
+        flex: 1
     },
     wrapper: {
         paddingBottom: 10,
         paddingTop: 10,
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingLeft: 30,
+        paddingRight: 30
     },
     patientProfile:{
         flexDirection:"row",
         justifyContent: "flex-start",
         alignItems:'flex-start',
         marginBottom:20,
+        width: 330
     },
     medicalHistoryWrapper:{
         flexDirection:'row',
@@ -243,6 +243,7 @@ const styles = StyleSheet.create({
         marginBottom:15,
         borderRadius: 0,
         borderColor: 'black',
+        width: 330
     },
     medicalHistoryTest:{
         flexDirection:'row',
