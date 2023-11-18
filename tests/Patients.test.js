@@ -1,3 +1,11 @@
+/**
+ * @file Patients.test.js
+ * @author Emre Deniz (301371047)
+ * @author Muindo Gituku (301372521)
+ * @date Nov 27, 2023
+ * @description React Native Project
+ */
+
 import React from 'react';
 import renderer from 'react-test-renderer';
 import Patients from '../screens/Patients';
