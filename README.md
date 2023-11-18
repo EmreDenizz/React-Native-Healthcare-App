@@ -8,7 +8,7 @@ npx expo start
 ```
 
 ### FEATURES:
-1. Use https://github.com/EmreDenizz/NodeJS-Healthcare-API-Server API server
+1. The app uses https://github.com/EmreDenizz/NodeJS-Healthcare-API-Server API server
 2. List all patients
 3. Search patients by name
 4. Filter critical patients 
