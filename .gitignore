@@ -131,3 +131,4 @@ dist
 
 .expo/
 .DS_Store
+coverage
