@@ -51,7 +51,6 @@
       "**/*.{js,jsx}",
       "!**/coverage/**",
       "!**/node_modules/**",
-      "!**/babel.config.js",
       "!**/jest.setup.js"
     ],
     "testEnvironment": "jsdom"

@@ -19,7 +19,6 @@ export default function PatientDetails({ route, navigation }) {
     const [department, setDepartment] = React.useState('');
     const [doctor, setDoctor] = React.useState('');
     const [patientTests, setPatientTests] = React.useState('');
-    const [infoMsgSize, setInfoMsgSize] = React.useState(0);
 
     // API server URL
     const apiUrl = "https://nodejs-healthcare-api-server.onrender.com"
@@ -67,15 +66,13 @@ export default function PatientDetails({ route, navigation }) {
         getAllPatientDetailsFromAPI();
         getAllTestsForPatientFromAPI();
         listAllTestsForPatient();
-        setInfoMsgSize(0);
     };
 
     // Delete patient
     function onClickDeleteTestButton(test_record_id){
         fetch(apiUrl+'/tests/'+test_record_id, {method:"DELETE"})
         .then(
-                res => res.json(),
-                setInfoMsgSize(16)
+                res => res.json()
             )
         .catch((error) => {
             console.error(error);
@@ -192,7 +189,7 @@ export default function PatientDetails({ route, navigation }) {
                 </View>
                 
                 {/* Test title and Add Test Button */}
-                <View style={{flexDirection:'row', marginBottom: 2}}>
+                <View style={{flexDirection:'row', marginBottom: 10}}>
                     <Text style={{fontWeight: "bold", fontSize: 18, marginTop: 0}}>Test Records</Text>
                     <TouchableOpacity
                         onPress={() => navigation.navigate('AddTestRecord', {patient_id: patient_id})}
@@ -202,9 +199,6 @@ export default function PatientDetails({ route, navigation }) {
                             style={[{width: 40}, {height: 40}, {marginTop: -5}]} />
                     </TouchableOpacity>
                 </View>
-
-                {/* Info message after test deletion */}
-                <Text style={{fontWeight: "bold", fontSize: infoMsgSize, color:"#3B80C8", marginBottom: 5}}>Deleted. Please refresh the screen</Text>
 
                 {/* List of Tests */}
                 {patientTestsList}
