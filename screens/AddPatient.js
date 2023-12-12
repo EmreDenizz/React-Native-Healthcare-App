@@ -2,7 +2,7 @@
  * @file AddPatient.js
  * @author Emre Deniz (301371047)
  * @author Muindo Gituku (301372521)
- * @date Nov 27, 2023
+ * @date Dec 13, 2023
  * @description React Native Project
  */
 

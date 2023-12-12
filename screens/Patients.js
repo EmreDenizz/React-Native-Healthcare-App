@@ -2,7 +2,7 @@
  * @file Patients.js
  * @author Emre Deniz (301371047)
  * @author Muindo Gituku (301372521)
- * @date Nov 27, 2023
+ * @date Dec 13, 2023
  * @description React Native Project
  */
 
@@ -35,7 +35,7 @@ export default function Patients({route, navigation}) {
         await fetch(apiUrl+"/patients/critical").
         then((response) => response.json()).
         then((json) => {
-            setPatients(json)
+            setPatients(json.reverse())
         })
         .catch((error) => {
             console.error(error);
@@ -108,7 +108,7 @@ export default function Patients({route, navigation}) {
             then((response) => response.json()).
             then((json) => {
                 if(json != "No patients found"){
-                    setPatients(json)
+                    setPatients(json.reverse())
                 }
             })
             .catch((error) => {
