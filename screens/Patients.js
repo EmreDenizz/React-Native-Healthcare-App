@@ -1,9 +1,7 @@
 /**
  * @file Patients.js
- * @author Emre Deniz (301371047)
- * @author Muindo Gituku (301372521)
- * @date Dec 13, 2023
- * @description React Native Project
+ * @author Emre Deniz
+ * @date Jan 16, 2024
  */
 
 import * as React from 'react';
